@@ -161,7 +161,7 @@ class Inspeq:
 
 
 
-inspeq_instance = Inspeq("0be2911254c67aa338a82c9ca0d22c77")
+inspeq_instance = Inspeq("")
 
 # Example input data
 input_data = {
