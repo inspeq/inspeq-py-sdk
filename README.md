@@ -1,4 +1,4 @@
-# Inspeq Python SDK : inspeq-pysdk
+# Inspeq Python SDK : inspeq-py-sdk
 
 Python SDK for Inspeq APIS.
 
