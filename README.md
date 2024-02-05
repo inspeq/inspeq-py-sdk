@@ -131,8 +131,3 @@ inspeq_instance.evaluate_conceptual_similarity(input_data)
 
 
 
-## TODO
-
-How to user api key method
-
-SSL enable-
