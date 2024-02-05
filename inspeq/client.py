@@ -1,6 +1,5 @@
 import requests
 import os
-from dataobjects import data_objects
 from dotenv import load_dotenv
 load_dotenv()
 
