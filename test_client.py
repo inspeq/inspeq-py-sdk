@@ -1,28 +1,56 @@
 import unittest
+from unittest.mock import patch, MagicMock
 from inspeq.client import Inspeq
 
 class TestInspeqSDK(unittest.TestCase):
-    def setUp(self):
-        # Set up any necessary resources or configurations for tests
-        pass
+    @patch('inspeq.client.requests.post')
+    def test_process_request_success(self, mock_post):
+        # Mock the requests.post method to return a successful response
+        mock_post.return_value = MagicMock(status_code=200, json=lambda: {"message": "Success"})
 
-    def tearDown(self):
-        # Clean up after each test
-        pass
+        inspeq_instance = Inspeq()
+        sdk_api_key = ""
+        input_data = {
+            "type": "your_type",
+            "llm_input_context": "your_llm_input_context",
+            "llm_input_query": "your_llm_input_query",
+            "llm_output": "your_llm_output",
+        }
 
+        # Call the method being tested
+        inspeq_instance.process_request(sdk_api_key, input_data)
 
-    def test_get_factual_correctness(self):
-        inspeq_inst = Inspeq(api_key="test_key", chatgpt_api_key="test_chatgpt_key")
-        result = inspeq_inst.get_factual_correctness("context", "question", "output")
-        self.assertEqual(result, 30)
-        
+        # Assert that the mock was called with the correct arguments
+        mock_post.assert_called_once_with(
+            "",
+            params={"secret_key": sdk_api_key},
+            json=input_data
+        )
 
-    def test_get_answer_relevance(self):
-        inspeq_inst = Inspeq(api_key="test_key", chatgpt_api_key="test_chatgpt_key")
-        result = inspeq_inst.get_get_answer_relevance("context", "question", "output")
-        self.assertEqual(result, 30)
-    
-    
+    @patch('inspeq.client.requests.post')
+    def test_process_request_failure(self, mock_post):
+        # Mock the requests.post method to return a failure response
+        mock_post.return_value = MagicMock(status_code=500, text="Internal Server Error")
+
+        inspeq_instance = Inspeq()
+        sdk_api_key = ""
+        input_data = {
+            "type": "your_type",
+            "llm_input_context": "your_llm_input_context",
+            "llm_input_query": "your_llm_input_query",
+            "llm_output": "your_llm_output",
+        }
+
+        # Call the method being tested
+        inspeq_instance.process_request(sdk_api_key, input_data)
+
+        # Assert that the mock was called with the correct arguments
+        mock_post.assert_called_once_with(
+            "t",
+            params={"secret_key": sdk_api_key},
+            json=input_data
+        )
+
     # Add more test cases as needed
 
 if __name__ == '__main__':
