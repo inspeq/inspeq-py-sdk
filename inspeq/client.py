@@ -2,6 +2,7 @@ import logging
 import requests
 
 API_URL ="https://stage.inspeq.ai/api/v1/sdk"
+
 # Configure logging
 logger = logging.getLogger(__name__)
 
@@ -38,6 +39,7 @@ def handle_request_exceptions(func):
 class Evaluator:
     def __init__(self, sdk_api_key):
         self.sdk_api_key = sdk_api_key
+        self.API_URL = API_URL
 
     @handle_request_exceptions
     def make_api_request(self, endpoint, input_data):

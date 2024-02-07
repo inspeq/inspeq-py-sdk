@@ -1,8 +1,7 @@
-from sdk import Evaluator
-from dataobjects import data_objects
+from inspeq.client import Evaluator
 
 
-API_KEY="0be2911254c67aa338a82c9ca0d22c77"
+API_KEY=""
 inspeq_instance = Evaluator(API_KEY)
 
 
