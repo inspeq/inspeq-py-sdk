@@ -1,24 +1,23 @@
 from setuptools import setup, find_packages
 
-# Read the content of your README file
-with open('README.md', 'r') as f:
-    long_description = f.read()
+
+def read_file(file_name):
+    with open(file_name, 'r', encoding='utf-8') as file:
+        return file.read()
+
 
 setup(
-    name='inspeqai',
-    version='0.1',
-    packages=find_packages(include=["inspeq*"]),
-    install_requires=[
+    name="inspeqai",
+    version="1.0.0",
+    packages=find_packages(include=['inspeq.*','inspeq']),
+    license="Apache 2.0",
+    author="Inspeq",
+     install_requires=[
         'requests', 
             # Specify dependencies if any
     ],
-    long_description=long_description,  # Assign the content of your README to long_description
-    long_description_content_type='text/markdown',  # Specify the type of content (markdown)
-    
-    project_urls={
-        'Documentation': '',  # Remove this if you want to use README as documentation
-        'Source': '',
-    },
-
-    # author='Tushar Dogra, Shubam Sharma',  
+    description="Inspeq AI SDK",
+    long_description=read_file(file_name="README.md"),
+    python_requires=">=3.10",
+      
 )
