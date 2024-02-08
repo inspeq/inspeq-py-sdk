@@ -38,6 +38,9 @@ and your_llm_output to  with the help of our evaluation metrices.
 '''
 print("\n   grammatical_correctness is:")
 print(inspeq_eval.grammatical_correctness(input_data))
+#get all metrices in one function
+
+inspeq_instance.get_all_metrices(input_data)
 
 
 ```
