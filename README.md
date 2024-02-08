@@ -36,8 +36,12 @@ is. Put your data at places of your_llm_input_context, your_llm_input_query
 and your_llm_output to  with the help of our evaluation metrices.
 
 '''
-print(inspeq_eval.grammatical_correctness(input_data))
 print("\n   grammatical_correctness is:")
+print(inspeq_eval.grammatical_correctness(input_data))
+#get all metrices in one function
+
+inspeq_instance.get_all_metrices(input_data)
+
 
 ```
 
