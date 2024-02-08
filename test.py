@@ -1,7 +1,7 @@
 from inspeq.client import Evaluator
 
 
-API_KEY=""
+API_KEY="0be2911254c67aa338a82c9ca0d22c77"
 inspeq_instance = Evaluator(API_KEY)
 
 
@@ -19,8 +19,7 @@ input_data =  {
     }
 
 
-print("\n c. response_tone is:")
-print(inspeq_instance.response_tone(input_data))
+# print("\n c. response_tone is:")
+# print(inspeq_instance.get_all_metrices(input_data))
 
-print("\n g. word_limit_test is:")
-print(inspeq_instance.word_limit_test(input_data))
+inspeq_instance.get_all_metrices(input_data)
