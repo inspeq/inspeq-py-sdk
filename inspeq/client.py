@@ -1,7 +1,9 @@
 import logging
 import requests
+import urllib3
 
-API_URL ="https://ec2-52-19-173-26.eu-west-1.compute.amazonaws.com/api/v1/sdk"
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+API_URL = "https://ec2-52-19-173-26.eu-west-1.compute.amazonaws.com/api/v1/sdk"
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -45,19 +47,18 @@ class Evaluator:
     def make_api_request(self, endpoint, input_data):
         url = f"{API_URL}/{endpoint}"
         return requests.post(
-            url, params={"secret_key": self.sdk_api_key}, json=input_data,verify=False
+            url, params={"secret_key": self.sdk_api_key}, json=input_data, verify=False
         )
-    
+
     def word_limit_test(self, input_data):
         url = f"{API_URL}/word_limit_test"
 
         response = requests.post(
-            url, params={"secret_key": self.sdk_api_key}, json=input_data,verify=False
+            url, params={"secret_key": self.sdk_api_key}, json=input_data, verify=False
         )
         response.raise_for_status()
 
-        return response.json()["data"]['word_limit_test']
-    
+        return response.json()["data"]["word_limit_test"]
 
     def grammatical_correctness(self, input_data):
         return self.make_api_request("grammatical_correctness", input_data)
@@ -70,12 +71,12 @@ class Evaluator:
 
     def answer_relevance(self, input_data):
         return self.make_api_request("answer_relevance", input_data)
-    
+
     def response_tone(self, input_data):
         url = f"{API_URL}/response_tone"
 
         response = requests.post(
-            url, params={"secret_key": self.sdk_api_key}, json=input_data,verify=False
+            url, params={"secret_key": self.sdk_api_key}, json=input_data, verify=False
         )
         response.raise_for_status()
 
@@ -86,6 +87,7 @@ class Evaluator:
 
     def conceptual_similarity(self, input_data):
         return self.make_api_request("conceptual_similarity", input_data)
+
     def get_all_metrices(self, input_data):
         print("\n  a. factual_consistency is:")
         print(self.factual_consistency(input_data))
