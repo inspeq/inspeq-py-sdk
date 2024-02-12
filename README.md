@@ -40,10 +40,14 @@ print("\n   grammatical_correctness is:")
 print(inspeq_eval.grammatical_correctness(input_data))
 #get all metrices in one function
 
-inspeq_instance.get_all_metrices(input_data)
+result=inspeq_eval.get_all_metrics(input_data)
+print(result)
 
 
 ```
+### get_all_metrics function
+This is the special function in our sdk providing all metrics .It will take little time to give you result.
+The result will be in the form of list .List is the key value pair of individual metrics and their response values.
 
 ### All Metrics provided by Inspeq sdk
 
@@ -104,4 +108,5 @@ Metrices:
   
 -  Conceptual Similarity:
   Measure how closely the generated text aligns with the intended conceptual content.
-
+- Get all metrics in one go:
+  You can get easily all the metrices in one function.
