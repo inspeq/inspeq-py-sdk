@@ -2,6 +2,7 @@ import logging
 import requests
 import urllib3
 import time
+from concurrent.futures import ThreadPoolExecutor
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -107,22 +108,30 @@ class Evaluator:
 
     def conceptual_similarity(self, input_data):
         return self.make_api_request("/api/v1/sdk/conceptual_similarity", input_data)
-
     def get_all_metrics(self, input_data):
-        start=time.time()
-    
         metrics = []
+        start=time.time()    
+        def execute_metric(metric_func):
+            return (metric_func.__name__, metric_func(input_data))
 
-        metrics.append(("factual_consistency", self.factual_consistency(input_data)))
-        metrics.append(("answer_relevance", self.answer_relevance(input_data)))
-        metrics.append((" response_tone", self.response_tone(input_data)))
-        metrics.append(("grammatical_correctness", self.grammatical_correctness(input_data)))
-        metrics.append(("fluency", self.fluency(input_data)))
-        metrics.append(("do_not_use_keywords", self.do_not_use_keywords(input_data)))
-        metrics.append(("word_limit_test", self.word_limit_test(input_data)))
-        metrics.append(("conceptual_similarity", self.conceptual_similarity(input_data)))
-        end=time.time()
-        print("time",end-start)
+        metric_functions = [
+            self.factual_consistency,
+            self.answer_relevance,
+            self.response_tone,
+            self.grammatical_correctness,
+            self.fluency,
+            self.do_not_use_keywords,
+            self.word_limit_test,
+            self.conceptual_similarity
+        ]
 
+        # Execute metric functions in parallel
+        with ThreadPoolExecutor() as executor:
+            futures = [executor.submit(execute_metric, func) for func in metric_functions]
+
+            # Append results to metrics list
+            for future in futures:
+                metrics.append(future.result())
+        end=time.time() 
+        print("Time taken for all metrics",end-start)
         return metrics
-    
