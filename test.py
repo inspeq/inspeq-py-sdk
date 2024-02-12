@@ -2,7 +2,7 @@ from inspeq.client import Evaluator
 
 
 API_KEY=""
-inspeq_instance = Evaluator(API_KEY)
+inspeq_instance = Evaluator(sdk_api_key=API_KEY,API_URL="")
 
 
 # for i, data_object in enumerate(data_objects, start=1):
@@ -22,4 +22,4 @@ input_data =  {
 # print("\n c. response_tone is:")
 # print(inspeq_instance.get_all_metrices(input_data))
 
-inspeq_instance.get_all_metrices(input_data)
+print(inspeq_instance.word_limit_test(input_data))
