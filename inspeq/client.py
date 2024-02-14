@@ -1,7 +1,7 @@
 import logging
 import requests
 
-API_URL ="https://api.inspeq.ai/api/v1/sdk"
+API_URL ="https://api.inspeq.ai"
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -43,13 +43,14 @@ class Evaluator:
 
     @handle_request_exceptions
     def make_api_request(self, endpoint, input_data):
-        url = f"{self.API_URL}/{endpoint}"
+        url = f"{self.API_URL}/api/v1/sdk/{endpoint}"
+        print(url)
         return requests.post(
             url, params={"secret_key": self.sdk_api_key}, json=input_data,verify=False
         )
     
     def word_limit_test(self, input_data):
-        url = f"{self.API_URL}/word_limit_test"
+        url = f"{self.API_URL}/api/v1/sdk/word_limit_test"
 
         response = requests.post(
             url, params={"secret_key": self.sdk_api_key}, json=input_data,verify=False
@@ -72,7 +73,7 @@ class Evaluator:
         return self.make_api_request("answer_relevance", input_data)
     
     def response_tone(self, input_data):
-        url = f"{self.API_URL}/response_tone"
+        url = f"{self.API_URL}/api/v1/sdk/response_tone"
 
         response = requests.post(
             url, params={"secret_key": self.sdk_api_key}, json=input_data,verify=False
