@@ -44,16 +44,16 @@ class Evaluator:
     @handle_request_exceptions
     def make_api_request(self, endpoint, input_data):
         url = f"{self.API_URL}/api/v1/sdk/{endpoint}"
-        print(url)
+       
         return requests.post(
-            url, params={"secret_key": self.sdk_api_key}, json=input_data,verify=False
+            url, params={"secret_key": self.sdk_api_key}, json=input_data,
         )
     
     def word_limit_test(self, input_data):
         url = f"{self.API_URL}/api/v1/sdk/word_limit_test"
 
         response = requests.post(
-            url, params={"secret_key": self.sdk_api_key}, json=input_data,verify=False
+            url, params={"secret_key": self.sdk_api_key}, json=input_data,
         )
         response.raise_for_status()
 
@@ -76,7 +76,7 @@ class Evaluator:
         url = f"{self.API_URL}/api/v1/sdk/response_tone"
 
         response = requests.post(
-            url, params={"secret_key": self.sdk_api_key}, json=input_data,verify=False
+            url, params={"secret_key": self.sdk_api_key}, json=input_data,
         )
         response.raise_for_status()
 
