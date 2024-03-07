@@ -1,7 +1,7 @@
 import logging
 import requests
 
-API_URL ="https://api.inspeq.ai"
+API_URL = "https://api.inspeq.ai"
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -37,28 +37,55 @@ def handle_request_exceptions(func):
 
 
 class Evaluator:
-    def __init__(self, sdk_api_key):
+    def __init__(self, sdk_api_key, api_url=None):
+        if not sdk_api_key:
+            raise ValueError("No SDK API key provided.")
         self.sdk_api_key = sdk_api_key
-        self.API_URL = API_URL
+        self.API_URL = api_url if api_url else API_URL
 
     @handle_request_exceptions
     def make_api_request(self, endpoint, input_data):
-        url = f"{self.API_URL}/api/v1/sdk/{endpoint}"
-       
-        return requests.post(
-            url, params={"secret_key": self.sdk_api_key}, json=input_data,
-        )
-    
-    def word_limit_test(self, input_data):
-        url = f"{self.API_URL}/api/v1/sdk/word_limit_test"
+        # Validate input_data
+        stripped_input_data = {key: value.strip() if isinstance(value, str) else value for key, value in input_data.items()}
+        if not stripped_input_data.get("llm_input_query"):
+            logger.error("The 'llm_input_query' field is empty.")
+            return None
+        if not stripped_input_data.get("llm_input_context"):
+            logger.error("The 'llm_input_context' field is empty.")
+            return None
+        if not stripped_input_data.get("llm_output"):
+            logger.error("The 'llm_output' field is empty.")
+            return None
 
+        url = f"{self.API_URL}/api/v1/sdk/{endpoint}"
+        return requests.post(
+            url,
+            params={"secret_key": self.sdk_api_key},
+            json=stripped_input_data,
+        )
+
+    def word_limit_test(self, input_data):
+        # Validate input_data
+        stripped_input_data = {key: value.strip() if isinstance(value, str) else value for key, value in input_data.items()}
+        if not stripped_input_data.get("llm_input_query"):
+            logger.error("The 'llm_input_query' field is empty.")
+            return None
+        if not stripped_input_data.get("llm_input_context"):
+            logger.error("The 'llm_input_context' field is empty.")
+            return None
+        if not stripped_input_data.get("llm_output"):
+            logger.error("The 'llm_output' field is empty.")
+            return None
+
+        url = f"{self.API_URL}/api/v1/sdk/word_limit_test"
         response = requests.post(
-            url, params={"secret_key": self.sdk_api_key}, json=input_data,
+            url,
+            params={"secret_key": self.sdk_api_key},
+            json=stripped_input_data,
         )
         response.raise_for_status()
 
-        return response.json()["data"]['word_limit_test']
-    
+        return response.json()["data"]
 
     def grammatical_correctness(self, input_data):
         return self.make_api_request("grammatical_correctness", input_data)
@@ -71,45 +98,74 @@ class Evaluator:
 
     def answer_relevance(self, input_data):
         return self.make_api_request("answer_relevance", input_data)
-    
-    def response_tone(self, input_data):
-        url = f"{self.API_URL}/api/v1/sdk/response_tone"
 
+    def response_tone(self, input_data):
+        # Validate input_data
+        stripped_input_data = {key: value.strip() if isinstance(value, str) else value for key, value in input_data.items()}
+        if not stripped_input_data.get("llm_input_query"):
+            logger.error("The 'llm_input_query' field is empty.")
+            return None
+        if not stripped_input_data.get("llm_input_context"):
+            logger.error("The 'llm_input_context' field is empty.")
+            return None
+        if not stripped_input_data.get("llm_output"):
+            logger.error("The 'llm_output' field is empty.")
+            return None
+
+        url = f"{self.API_URL}/api/v1/sdk/response_tone"
         response = requests.post(
-            url, params={"secret_key": self.sdk_api_key}, json=input_data,
+            url,
+            params={"secret_key": self.sdk_api_key},
+            json=stripped_input_data,
         )
         response.raise_for_status()
 
-        return response.json()["data"]["tone"]
+        return response.json()["data"]
 
     def factual_consistency(self, input_data):
         return self.make_api_request("factual_consistency", input_data)
 
     def conceptual_similarity(self, input_data):
         return self.make_api_request("conceptual_similarity", input_data)
-    
-    def get_all_metrices(self, input_data):
-        print("\n  a. factual_consistency is:")
-        print(self.factual_consistency(input_data))
 
-        print("\n b. answer_relevance is:")
-        print(self.answer_relevance(input_data))
+    def readability(self, input_data):
+        # Validate input_data
+        stripped_input_data = {key: value.strip() if isinstance(value, str) else value for key, value in input_data.items()}
+        if not stripped_input_data.get("llm_input_query"):
+            logger.error("The 'llm_input_query' field is empty.")
+            return None
+        if not stripped_input_data.get("llm_input_context"):
+            logger.error("The 'llm_input_context' field is empty.")
+            return None
+        if not stripped_input_data.get("llm_output"):
+            logger.error("The 'llm_output' field is empty.")
+            return None
 
-        print("\n c. response_tone is:")
-        print(self.response_tone(input_data))
+        url = f"{self.API_URL}/api/v1/sdk/readability"
+        response = requests.post(
+            url,
+            params={"secret_key": self.sdk_api_key},
+            json=stripped_input_data,
+        )
+        response.raise_for_status()
 
-        print("\n  d. grammatical_correctness is:")
-        print(self.grammatical_correctness(input_data))
+        return response.json()["data"]
 
-        print("\n e. fluency is:")
-        print(self.fluency(input_data))
+    def coherence(self, input_data):
+        return self.make_api_request("coherence", input_data)
 
-        print("\n f. do_not_use_keywords is:")
+    def get_all_metrics(self, input_data):
+        metrics_results = {}
 
-        print(self.do_not_use_keywords(input_data))
+        metrics_results["factual_consistency"] = self.factual_consistency(input_data)
+        metrics_results["answer_relevance"] = self.answer_relevance(input_data)
+        metrics_results["response_tone"] = self.response_tone(input_data)
+        metrics_results["grammatical_correctness"] = self.grammatical_correctness(input_data)
+        metrics_results["fluency"] = self.fluency(input_data)
+        metrics_results["do_not_use_keywords"] = self.do_not_use_keywords(input_data)
+        metrics_results["word_limit_test"] = self.word_limit_test(input_data)
+        metrics_results["conceptual_similarity"] = self.conceptual_similarity(input_data)
+        metrics_results["coherence"] = self.coherence(input_data)
+        metrics_results["readability"] = self.readability(input_data)
 
-        print("\n g. word_limit_test is:")
-        print(self.word_limit_test(input_data))
-
-        print("\n h.  conceptual_similarity is:")
-        print(self.conceptual_similarity(input_data))
+        return metrics_results
