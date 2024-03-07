@@ -157,15 +157,15 @@ class Evaluator:
     def get_all_metrics(self, input_data):
         metrics_results = {}
 
-        metrics_results["a"] = self.factual_consistency(input_data)
-        metrics_results["b"] = self.answer_relevance(input_data)
-        metrics_results["c"] = self.response_tone(input_data)
-        metrics_results["d"] = self.grammatical_correctness(input_data)
-        metrics_results["e"] = self.fluency(input_data)
-        metrics_results["f"] = self.do_not_use_keywords(input_data)
-        metrics_results["g"] = self.word_limit_test(input_data)
-        metrics_results["h"] = self.conceptual_similarity(input_data)
-        metrics_results["i"] = self.coherence(input_data)
-        metrics_results["j"] = self.readability(input_data)
+        metrics_results["factual_consistency"] = self.factual_consistency(input_data)
+        metrics_results["answer_relevance"] = self.answer_relevance(input_data)
+        metrics_results["response_tone"] = self.response_tone(input_data)
+        metrics_results["grammatical_correctness"] = self.grammatical_correctness(input_data)
+        metrics_results["fluency"] = self.fluency(input_data)
+        metrics_results["do_not_use_keywords"] = self.do_not_use_keywords(input_data)
+        metrics_results["word_limit_test"] = self.word_limit_test(input_data)
+        metrics_results["conceptual_similarity"] = self.conceptual_similarity(input_data)
+        metrics_results["coherence"] = self.coherence(input_data)
+        metrics_results["readability"] = self.readability(input_data)
 
         return metrics_results
