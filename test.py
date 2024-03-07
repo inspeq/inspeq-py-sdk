@@ -1,4 +1,5 @@
 from inspeq.client import Evaluator
+import time
 
 
 API_KEY=""
@@ -11,15 +12,23 @@ inspeq_instance = Evaluator(sdk_api_key=API_KEY)
 #         "llm_input_context": data_object["llm_input_context"],
 #         "llm_output": data_object["llm_output"],
 #     }
-
+a=time.time()
 input_data = {
-            "llm_input_context": "Seattle is known for its wet  to its location in the Pacific Northwest region of the United States. From 1981 to 2010, the average annual precipitation measured at Seattle-Tacoma International Airport was 37.49 inches (952 mm). This significant amount of rainfall contributes to lush vegetation and a generally green landscape throughout the year. The city's proximity to the Pacific Ocean also influences its weather patterns, with maritime air masses bringing moisture-laden air inland. However, despite the overall wetness of the climate, there is a great variance in local climates within the Seattle area.",
-            "llm_input_query": "What factors contribute to the variance in local climates in the Seattle area?",
-            "llm_output": "Several factors contribute to the variance in local climates in the Seattle area. One significant factor is the presence of the Olympic Mountains to the west of the city. These mountains act as a barrier, causing the 'rain shadow effect' where the western slopes receive abundant rainfall while the eastern slopes experience much drier conditions. Additionally, Seattle's proximity to Puget Sound and other bodies of water can create microclimates, with areas closer to the water experiencing milder temperatures due to the moderating influence of the water. Furthermore, elevation plays a role, with higher elevations generally being cooler and receiving more precipitation compared to lower-lying areas. Urban heat island effects can also impact local climates, with downtown areas typically being warmer than surrounding suburbs and rural areas.",
+           "llm_input_query": " ",
+    "llm_input_context": "Cybersecurity is the practice of protecting computer systems, networks, and data from unauthorized access, attacks, and damage...",
+    "llm_output": "Cybersecurity encompasses several fundamental concepts, including confidentiality, integrity, availability, authentication, and non-repudiation. Confidentiality refers to the protection of sensitive information from unauthorized access or disclosure, ensuring that only authorized individuals can access the data. Integrity involves maintaining the accuracy and consistency of data throughout its lifecycle, preventing unauthorized modifications or alterations. Availability ensures that systems and data are accessible and usable when needed, minimizing downtime and disruptions to operations. Authentication verifies the identity of users or entities attempting to access a system or resource, typically through credentials such as passwords, biometrics, or cryptographic keys. Non-repudiation provides proof of the origin or delivery of data and prevents parties from denying their involvement in a transaction or communication."
         }
 
 
-print("\n c. response_tone is:")
-print(inspeq_instance.factual_consistency(input_data))
-
-inspeq_instance.get_all_metrices(input_data)
+print("Factual Consistency:", inspeq_instance.factual_consistency(input_data))
+print("Answer Relevance:", inspeq_instance.answer_relevance(input_data))
+print("Response Tone:", inspeq_instance.response_tone(input_data))
+print("Grammatical Correctness:", inspeq_instance.grammatical_correctness(input_data))
+print("Fluency:", inspeq_instance.fluency(input_data))
+print("Do Not Use Keywords:", inspeq_instance.do_not_use_keywords(input_data))
+print("Word Limit Test:", inspeq_instance.word_limit_test(input_data))
+print("Conceptual Similarity:", inspeq_instance.conceptual_similarity(input_data))
+print("Coherence:", inspeq_instance.coherence(input_data))
+print("Readability:", inspeq_instance.readability(input_data))
+b=time.time()
+print(b-a)
