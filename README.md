@@ -70,7 +70,7 @@ and your_llm_output .
 
 '''
 print("\n   grammatical_correctness is:")
-print(inspeq_eval.grammatical_correctness(input_data))
+print(inspeq_instance.grammatical_correctness(input_data))
 #get all metrices in one function
 
 print(inspeq_instance.get_all_metrices(input_data))
