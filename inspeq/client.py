@@ -128,6 +128,9 @@ class Evaluator:
     def conceptual_similarity(self, input_data):
         return self.make_api_request("conceptual_similarity", input_data)
 
+    def clarity(self, input_data):
+        return self.make_api_request("clarity", input_data)
+
     def readability(self, input_data):
         # Validate input_data
         stripped_input_data = {key: value.strip() if isinstance(value, str) else value for key, value in input_data.items()}
@@ -167,5 +170,7 @@ class Evaluator:
         metrics_results["conceptual_similarity"] = self.conceptual_similarity(input_data)
         metrics_results["coherence"] = self.coherence(input_data)
         metrics_results["readability"] = self.readability(input_data)
+        metrics_results["clarity"] = self.clarity(input_data)
+
 
         return metrics_results

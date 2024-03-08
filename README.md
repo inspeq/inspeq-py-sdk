@@ -1,8 +1,19 @@
 ## Project Description
-
+Inspeqai python SDK
 ### Inspeq
 
-### Installation
+
+### for inspeq developers 
+1. Clone the repository
+2. Create virtual environment
+3. Activate virtual environment
+4. Go to inspeq-py-sdk folder 
+5. Install all requirements
+and then use it as per your requirements
+
+
+## For other users
+### Installation command
 
 ```sh
 pip install inspeqai
@@ -14,15 +25,14 @@ Get your API keys from <a href="https://app.inspeq.ai/" target="_blank">Here</a>
 
 
 ### Usage
-
+create main.py use code below
 ```py
 
 from inspeq.client import Evaluator
 
-
 #initialization 
-inspeq_eval = Evaluator(sdk_api_key="YOUR_INSPEQ_API_KEY")
-
+API_KEY = "your_sdk_api_key"
+inspeq_instance = Evaluator(sdk_api_key=API_KEY)
 
 # Example input data
 input_data = {
@@ -40,7 +50,7 @@ print("\n   grammatical_correctness is:")
 print(inspeq_eval.grammatical_correctness(input_data))
 #get all metrices in one function
 
-inspeq_instance.get_all_metrices(input_data)
+print(inspeq_instance.get_all_metrices(input_data))
 
 
 ```
@@ -48,31 +58,18 @@ inspeq_instance.get_all_metrices(input_data)
 ### All Metrics provided by Inspeq sdk
 
 ```py
-
-print("\n  a. factual_consistency is:")
-print(inspeq_eval.factual_consistency(input_data))
-
-print("\n b. answer_relevance is:")
-print(inspeq_eval.answer_relevance(input_data))
-
-print("\n c. response_tone is:")
-print(inspeq_eval.response_tone(input_data))
-
-print("\n  d. grammatical_correctness is:")
-print(inspeq_eval.grammatical_correctness(input_data))
-
-print("\n e. fluency is:")
-print(inspeq_eval.fluency(input_data))
-
-print("\n f. do_not_use_keywords is:")
-
-print(inspeq_eval.do_not_use_keywords(input_data))
-
-print("\n g. word_limit_test is:")
-print(inspeq_eval.word_limit_test(input_data))
-
-print("\n h.  conceptual_similarity is:")
-print(inspeq_eval.conceptual_similarity(input_data))
+    print("Factual Consistency:", inspeq_instance.factual_consistency(input_data))
+    print("Answer Relevance:", inspeq_instance.answer_relevance(input_data))
+    print("Response Tone:", inspeq_instance.response_tone(input_data))
+    print("Grammatical Correctness:", inspeq_instance.grammatical_correctness(input_data))
+    print("Fluency:", inspeq_instance.fluency(input_data))
+    print("Do Not Use Keywords:", inspeq_instance.do_not_use_keywords(input_data))
+    print("Word Limit Test:", inspeq_instance.word_limit_test(input_data))
+    print("Conceptual Similarity:", inspeq_instance.conceptual_similarity(input_data))
+    print("Coherence:", inspeq_instance.coherence(input_data))
+    print("Readability:", inspeq_instance.readability(input_data))
+    print("Clarity:", inspeq_instance.clarity(input_data))
+    print("Clarity:", inspeq_instance.get_all_metrics(input_data))
 
 ```
 
@@ -105,3 +102,17 @@ Metrices:
 -  Conceptual Similarity:
   Measure how closely the generated text aligns with the intended conceptual content.
 
+- Coherence:
+  Coherence metric evaluates how well the model generates coherent and logical responses that align with the context of the question.
+
+- Readibility:
+  It tells how easy is to read and understand the llm output
+
+- Clarity:
+  Clarity here refers to the response’s clarity in terms of language and structure. It's a subjective metric and is based on grammar, readability, concise sentences and words, and less redundancy or diversity at the moment. To add contextual clarity, we need to add topic coherence, response relevance, and word ambiguity.
+
+- Get_all_metrics:
+  This is the super metric it will give you result in one go of all metrics but remember it is heavy metrics so it will take time .Right now it is giving all 11 metrics in response
+
+## Official Documentation
+Click <a href="https://docs.inspeq.ai/" target="_blank">Here</a>
