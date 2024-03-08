@@ -1,31 +1,54 @@
 ## Project Description
 Inspeqai python SDK
-### Inspeq
+## Inspeq
+##  More detail 0fficial Documentation
+Click <a href="https://docs.inspeq.ai/" target="_blank">Here</a>
+
+### Creating a Virtual Environment in Linux and Windows
+
+### Linux OS / MAC OS
+
+### Using venv (Python 3)
+
+1. Open a terminal.
+2. Navigate to the directory where you want to create the virtual environment.
+3. Run the following command:
+```bash
+   python3 -m venv venv
+```
+#### Activate it 
+```bash
+  source venv/bin/activate
+
+```
+### windows
+
+1. Open a terminal.
+2. Navigate to the directory where you want to create the virtual environment.
+3. Run the following command:
+```bash
+   python -m venv venv
+```
+#### Activate it 
+```bash
+venv\Scripts\activate
+```
+#### Make sure your environment is activated everytime you use package
 
 
-### for inspeq developers 
-1. Clone the repository
-2. Create virtual environment
-3. Activate virtual environment
-4. Go to inspeq-py-sdk folder 
-5. Install all requirements
-and then use it as per your requirements
-
-
-## For other users
-### Installation command
+### SDK Installation 
+Enter below Command  in terminal
 
 ```sh
 pip install inspeqai
 ```
 
-### Get API keys
-
+### Get SDK API keys
 Get your API keys from <a href="https://app.inspeq.ai/" target="_blank">Here</a>
 
-
 ### Usage
-create main.py use code below
+
+Create main.py and you can use below code snippet
 ```py
 
 from inspeq.client import Evaluator
@@ -43,7 +66,7 @@ input_data = {
 
 '''Note : Do not change the structure of input data keep the structure as it
 is. Put your data at places of your_llm_input_context, your_llm_input_query
-and your_llm_output to  with the help of our evaluation metrices.
+and your_llm_output .
 
 '''
 print("\n   grammatical_correctness is:")
@@ -51,7 +74,6 @@ print(inspeq_eval.grammatical_correctness(input_data))
 #get all metrices in one function
 
 print(inspeq_instance.get_all_metrices(input_data))
-
 
 ```
 
@@ -69,7 +91,7 @@ print(inspeq_instance.get_all_metrices(input_data))
     print("Coherence:", inspeq_instance.coherence(input_data))
     print("Readability:", inspeq_instance.readability(input_data))
     print("Clarity:", inspeq_instance.clarity(input_data))
-    print("Clarity:", inspeq_instance.get_all_metrics(input_data))
+    print("Get all metrics:", inspeq_instance.get_all_metrics(input_data))
 
 ```
 
