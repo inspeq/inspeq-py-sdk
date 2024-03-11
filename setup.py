@@ -4,7 +4,7 @@ with open('README.md', 'r') as f:
 
 setup(
     name="inspeqai",
-    version="1.0.9",
+    version="1.0.10",
     packages=find_packages(include=["inspeq*"]),
     license="Apache 2.0",
     author="Inspeq",
@@ -18,7 +18,8 @@ setup(
 
     python_requires=">=3.10",  
     project_urls={
-        # "Documentation": "",
+        "Documentation": "https://docs.inspeq.ai",
         "Source": "https://github.com/inspeq/inspeq-py-sdk",
+        
     },
 )
