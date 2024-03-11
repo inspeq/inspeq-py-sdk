@@ -1,10 +1,12 @@
-## Project Description
-Inspeqai python SDK
-## Inspeq
-##  More detail 0fficial Documentation
-Click <a href="https://docs.inspeq.ai/" target="_blank">Here</a>
+# Inspeqai python SDK
 
-### Creating a Virtual Environment in Linux and Windows
+- **Website:** https://www.inspeq.ai
+- **Inspeq app:** https://app.inspeq.ai
+- **Detailed Documentation:** https://docs.inspeq.ai
+
+
+## Quikstart
+### Create a Virtual Environment in Linux and Windows
 
 ### Linux OS / MAC OS
 
@@ -58,26 +60,54 @@ API_KEY = "your_sdk_api_key"
 inspeq_instance = Evaluator(sdk_api_key=API_KEY)
 
 # Example input data
-input_data = {
-    "llm_input_query": "your_llm_input_query",
-    "llm_input_context": "your_llm_input_context",
-    "llm_output": "your_llm_output",
-}
+input_data={
+    "prompt":"llm_prompt",
+     "response":" llm_output "
+  }
 
 '''Note : Do not change the structure of input data keep the structure as it
-is. Put your data at places of your_llm_input_context, your_llm_input_query
+is. Put your data at places of llm_prompt, llm_output
 and your_llm_output .
 
 '''
-print("\n   grammatical_correctness is:")
-print(inspeq_eval.grammatical_correctness(input_data))
-#get all metrices in one function
+print("Word limit test :", inspeq_instance.word_limit_test(input_data))
 
-print(inspeq_instance.get_all_metrices(input_data))
 
 ```
+#### Get all metrics
+```py
+
+from inspeq.client import Evaluator
+
+#initialization 
+API_KEY = "your_sdk_api_key"
+inspeq_instance = Evaluator(sdk_api_key=API_KEY)
+
+# Example input data
+# three parameters are required for get_all_metrics you can see below ,do not change structure inside the input data
+input_data={
+    "prompt":"your_llm_prompt",
+    "context":"your_llm_context",
+     "response":"your_llm_output "
+  }
+
+'''Note : Do not change the structure of input data keep the structure as it
+is you need to include prompt,context,response as it is . Put your data at places of your_llm_prompt, your_llm_context
+and your_llm_output .
+
+'''
+#get all metrics in one function
+
+print(inspeq_instance.get_all_metrics(input_data))
+
+```
+After you run the file all metrics result will print in your terminal or output window. 
 
 ### All Metrics provided by Inspeq sdk
+ 
+ Different metrics required different parameters you can visit official documentation 
+
+ Click <a href="https://docs.inspeq.ai/" target="_blank">Here</a>
 
 ```py
     print("Factual Consistency:", inspeq_instance.factual_consistency(input_data))
@@ -135,6 +165,3 @@ Metrices:
 
 - Get_all_metrics:
   This is the super metric it will give you result in one go of all metrics but remember it is heavy metrics so it will take time .Right now it is giving all 11 metrics in response
-
-## Official Documentation
-Click <a href="https://docs.inspeq.ai/" target="_blank">Here</a>
