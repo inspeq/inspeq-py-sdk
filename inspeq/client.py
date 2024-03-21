@@ -1,5 +1,6 @@
 import logging
 import requests
+import json
 
 API_URL = "https://api.inspeq.ai"
 
@@ -32,7 +33,7 @@ class Evaluator:
             )
             response.raise_for_status()
 
-            return response.json()["data"]
+            return json.dumps(response.json()["data"])
         except requests.exceptions.HTTPError as err:
             if response.status_code == 401:
                 logger.error("SDK API key is not valid.")
