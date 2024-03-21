@@ -175,5 +175,17 @@ Metrices:
 - Clarity:
   Clarity is a subjective metric and refers to the response’s clarity in terms of language and structure. 
 
+- Model Refusal:
+  Model refusal detects whether the model responds with a refusal response or not. Example of a refusal response - "I'm sorry, but I cannot provide you with a credit card number. It is against ethical and legal guidelines to share such sensitive information. If you have any other questions or need assistance with something else, feel free to ask."
+
+- Data Leakage:
+  Data leakage detects whether the model response contains any personal information such as credit card numbers, phone numbers, emails, urls etc.
+
+- Creativity:
+  Creativity is also a subjective concept, especially in AI-generated content. LLMs can be very creative but the results are mostly evaluated by humans. For our story generation and document summarization use cases, we define this metric as a combination of different metrics that could provide a more comprehensive evaluation. We use lexical diversity score, contextual similarity score and hallucination score to evaluate creativity.
+
+- Diversity:
+  Lexical diversity metrics assess the diversity of vocabulary used in a piece of text. Higher lexical diversity generally indicates a broader range of words and can contribute to more natural-sounding language.
+
 - Get_all_metrics:
   This will provide result of all metrics.

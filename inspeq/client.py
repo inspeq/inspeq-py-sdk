@@ -143,7 +143,37 @@ class Evaluator:
             raise ValueError("'context' is not provided")
 
         return self.make_api_request("coherence", input_data)
+    def model_refusal(self, input_data):
+        # Validate input_data
+        response_data = input_data.get("response", "").strip()
+        if not response_data:
+            raise ValueError("'response' is not provided")
 
+        return self.make_api_request("model_refusal", input_data)
+    def data_leakage(self, input_data):
+        # Validate input_data
+        response_data = input_data.get("response", "").strip()
+        if not response_data:
+            raise ValueError("'response' is not provided")
+
+        return self.make_api_request("data_leakage", input_data)
+    def diversity(self, input_data):
+        # Validate input_data
+        response_data = input_data.get("response", "").strip()
+        if not response_data:
+            raise ValueError("'response' is not provided")
+
+        return self.make_api_request("diversity", input_data)
+    def creativity(self, input_data):
+        # Validate input_data
+        response_data = input_data.get("response", "").strip()
+        if not response_data:
+            raise ValueError("'response' is not provided")
+        response_data = input_data.get("context", "").strip()
+        if not response_data:
+            raise ValueError("'context' is not provided")
+
+        return self.make_api_request("creativity", input_data)
     def get_all_metrics(self, input_data):
         metrics_results = {}
 
@@ -162,5 +192,9 @@ class Evaluator:
         metrics_results["coherence"] = self.coherence(input_data)
         metrics_results["readability"] = self.readability(input_data)
         metrics_results["clarity"] = self.clarity(input_data)
+        metrics_results["model_refusal"] = self.model_refusal(input_data)
+        metrics_results["data_leakage"] = self.data_leakage(input_data)
+        metrics_results["diversity"] = self.diversity(input_data)
+        metrics_results["creativity"] = self.creativity(input_data)
 
         return metrics_results
