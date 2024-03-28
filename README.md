@@ -122,22 +122,6 @@ Different metrics required different parameters you can visit official documenta
 
 Click <a href="https://docs.inspeq.ai/" target="_blank">Here</a>
 
-```py
-    print("Factual Consistency:", inspeq_instance.factual_consistency(input_data))
-    print("Answer Relevance:", inspeq_instance.answer_relevance(input_data))
-    print("Response Tone:", inspeq_instance.response_tone(input_data))
-    print("Grammatical Correctness:", inspeq_instance.grammatical_correctness(input_data))
-    print("Fluency:", inspeq_instance.fluency(input_data))
-    print("Do Not Use Keywords:", inspeq_instance.do_not_use_keywords(input_data))
-    print("Word Limit Test:", inspeq_instance.word_limit_test(input_data))
-    print("Conceptual Similarity:", inspeq_instance.conceptual_similarity(input_data))
-    print("Coherence:", inspeq_instance.coherence(input_data))
-    print("Readability:", inspeq_instance.readability(input_data))
-    print("Clarity:", inspeq_instance.clarity(input_data))
-    print("Get all metrics:", inspeq_instance.get_all_metrics(input_data))
-
-```
-
 ### Supported Features
 
 Metrices:
@@ -145,17 +129,11 @@ Metrices:
 - Factual Consistency:
   Factual Consistency (FC) pertains to the precision and correctness of information articulated in text produced by Large Language Models (LLMs). It involves the comparison of generated information with the given context, input, or anticipated factual knowledge.
 
-- Grammatical Correctness:
-  Assess the grammatical accuracy of the generated text.
-
 - Do Not Use Keywords:
-  Identify and evaluate the use of specific keywords or phrases.
-
-- Answer Fluency:
-  Fluency refers to the ability of the LLM to generate text that is grammatically correct, natural-sounding, and easy to read.
-
+  Test the List of keywords that should not be present in the response.
+  
 - Answer Relevance:
-  Determine the relevance of the generated text in the context of a given query or
+  Answer Relevance assesses the alignment between the model's responses and the intended meaning of the input.
 
 - Word Limit Test:
   Check if the generated text adheres to specified word limits.
@@ -167,13 +145,13 @@ Metrices:
   This refers to the semantic similarity or relatedness between response generated and provided context.
 
 - Coherence:
-  Coherence metric evaluates the ability of the LLM to generate text that is organized, well-structured, and easy to understand.
+  The ability of the LLM to generate text that is organized, well-structured, and easy to understand.
 
 - Readibility:
   Readability scores help assess whether the LLM’s generated text is appropriate for the target audience’s reading level.
 
 - Clarity:
-  Clarity is a subjective metric and refers to the response’s clarity in terms of language and structure. 
+  Clarity is a subjective metric and refers to the response’s clarity in terms of language and structure.
 
 - Model Refusal:
   Model refusal detects whether the model responds with a refusal response or not. Example of a refusal response - "I'm sorry, but I cannot provide you with a credit card number. It is against ethical and legal guidelines to share such sensitive information. If you have any other questions or need assistance with something else, feel free to ask."
@@ -187,5 +165,5 @@ Metrices:
 - Diversity:
   Lexical diversity metrics assess the diversity of vocabulary used in a piece of text. Higher lexical diversity generally indicates a broader range of words and can contribute to more natural-sounding language.
 
-- Get_all_metrics:
-  This will provide result of all metrics.
+- Narrative Continuity:
+  Narrative continuity metric is a measure that evaluates whether a generated response maintains coherence and logical flow with the preceding narrative, without introducing abrupt or illogical shifts (ex.- story jumps). It analyzes factors like topic consistency, event/character continuity, and overall coherence to detect discontinuities in the narrative.
