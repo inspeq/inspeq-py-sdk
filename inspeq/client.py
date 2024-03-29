@@ -46,6 +46,9 @@ class Evaluator:
                 print(response.text)
             elif response.status_code == 401:
                 print("SDK API key is not valid.")
+            elif response.status_code == 422:
+                print("Error: Invalid input data. Please check the input")
+                
             else:
                 print(f"HTTP Error: {err}")
             return None
@@ -88,7 +91,6 @@ class Evaluator:
 
     def answer_relevance(self, input_data, config_input, task_name= None):
         # Validate input_data
-        print(task_name)
         response_data = input_data.get("response", "").strip()
         if not response_data:
             raise ValueError("'response' is not provided")
@@ -196,11 +198,11 @@ class Evaluator:
         response_data = input_data.get("response", "").strip()
         if not response_data:
             raise ValueError("'response' is not provided")
-        response_data = input_data.get("context", "").strip()
+        
 
         return self.make_api_request("narrative_continuity", input_data, config_input, task_name)
 
-    def get_all_metrics(self, input_data,config_input):
+    def get_all_metrics(self, input_data,config_input, task_name = None):
         metrics_results = {}
 
         metrics_results["factual_consistency"] = self.factual_consistency(input_data,config_input, task_name= None)
