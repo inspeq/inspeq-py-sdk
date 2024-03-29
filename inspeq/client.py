@@ -2,7 +2,7 @@ import logging
 import requests
 import json
 
-API_URL = "https://api.inspeq.ai"
+API_URL = "https://stage.inspeq.ai"
 
 # Configure logging
 logger = logging.getLogger(__name__)
