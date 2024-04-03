@@ -60,9 +60,11 @@ class InspeqEval:
             elif response.status_code == 401:
                 print("SDK API key is not valid.")
             elif response.status_code == 422:
-                print("Error: Invalid input data. Please check the input")
+                error_detail = response.json().get('detail', 'Please check the details provided to the fucntion.')
+                raise ValueError(error_detail)
+
             else:
-                raise ValueError(f"HTTP Error: {err}")
+                raise ValueError(f"{err}")
             return None
         
 

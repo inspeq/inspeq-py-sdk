@@ -1,17 +1,22 @@
-API_KEY = "in-f579f248eb74d2bbf5c4fa40bac03298"
-# API_KEY = "in-b2981ee6612559e880a72b49bebfe897"
+# API_KEY = "in-f579f248eb74d2bbf5c4fa40bac03298"
+API_KEY = "in-db252abf651a3c7fe70a3b093f17e970"
 
 
 
-data = [{
+# data = [{
+#         "response": "response1",
+#         "context" : "this",
+#         "prompt":"this is prompt yeah"
+#     }
+    
+# ]
+
+data = {
         "response": "response1",
         "context" : "this",
         "prompt":"this is prompt yeah"
     }
     
-]
-
-
 from inspeq.client import InspeqEval
 metrics_list = [ "response_tone"]
 inspeq_eval = InspeqEval(inspeq_api_key= API_KEY)
@@ -24,6 +29,17 @@ metrics_config = {
     }
 }
 
-results = inspeq_eval.evaluate_llm_task(data= data , metrics_list= metrics_list)
+config_input=  {
+    "threshold": 0.5,
+    "custom_labels": [
+      "strisssssssssssssssssssng"
+    ],
+    "label_thresholds": [
+      0,1
+    ]
+  }
+
+
+results = inspeq_eval.clarity(input_data= data ,config_input= config_input)
 
 print(results)
