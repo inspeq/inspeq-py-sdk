@@ -1,32 +1,29 @@
-# from inspeq.client import Evaluator
-from inspeq.client import Evaluator
-
 API_KEY = "in-f579f248eb74d2bbf5c4fa40bac03298"
+# API_KEY = "in-b2981ee6612559e880a72b49bebfe897"
 
-prompt = "query_text"
-context = "context_text"  
-response = "output_text"  
-task_name = "abc" 
 
-metrics_list = [
-    "model_refusal",
-    "Answer_relevance",
-    "conceptual_similarity"
+
+data = [{
+        "response": "response1",
+        "context" : "this",
+        "prompt":"this is prompt yeah"
+    }
+    
 ]
+
+
+from inspeq.client import InspeqEval
+metrics_list = [ "response_tone"]
+inspeq_eval = InspeqEval(inspeq_api_key= API_KEY)
+
 metrics_config = {
-    "model_refusal_config": {
+    "response_tone_config": {
         "threshold": 0.5,
-        "custom_labels": ["string","ss"],
-        "label_thresholds": [0,1],
-    },
-    "conceptual_similarity_config": {
-        "threshold": 0.5,
-        "custom_labels": ["string"],
-        "label_thresholds": [0],
+        "custom_labels": ["string", "ss"],
+        "label_thresholds": [0,0.5,1]
     }
 }
-inspeq_instance = Evaluator(API_KEY, api_url="https://stage.inspeq.ai")
-result = inspeq_instance.eval(prompt, context, response, task_metric_list=metrics_list, task_metric_config=metrics_config)
-print(result)
 
+results = inspeq_eval.evaluate_llm_task(data= data , metrics_list= metrics_list)
 
+print(results)
