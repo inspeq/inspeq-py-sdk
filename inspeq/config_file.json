@@ -9,36 +9,42 @@
         "answer_relevance_config": {
           "threshold": 0.5,
           "custom_labels": [
-            "irrelevant",
-            "relevant"
+            "Irrelevant Answer",
+            "Marginally Relevant Answer",
+            "Relevant Answer"
           ],
           "label_thresholds": [
             0,
             0.5,
+            0.7,
             1
           ]
         },
         "response_tone_config": {
           "threshold": 0.5,
           "custom_labels": [
-            "fluent",
-            "not_fluent"
+            "Negative",
+            "Neutral",
+            "Positive"
           ],
           "label_thresholds": [
             0,
             0.5,
+            0.7,
             1
           ]
         },
         "factual_consistency_config": {
           "threshold": 0.5,
           "custom_labels": [
-            "low_confidence",
-            "high_confidence"
+            "Hallucinated",
+            "Inconsistent",
+            "Consistent"
           ],
           "label_thresholds": [
             0,
             0.5,
+            0.7,
             1
           ]
         },
@@ -67,68 +73,79 @@
         "coherence_config": {
           "threshold": 0.5,
           "custom_labels": [
-            "incoherent",
-            "coherent"
+            "Incoherent",
+            "Slightly Coherent",
+            "Coherent"
           ],
           "label_thresholds": [
             0,
             0.5,
+            0.7,
             1
           ]
         },
         "grammatical_correctness_config": {
           "threshold": 0.5,
           "custom_labels": [
-            "incorrect",
-            "correct"
+            "Incorrect",
+            "Partially Correct",
+            "Correct"
           ],
           "label_thresholds": [
             0,
             0.5,
+            0.7,
             1
           ]
         },
         "conceptual_similarity_config": {
           "threshold": 0.5,
           "custom_labels": [
-            "similar",
-            "not similar"
+            "Dissimilar",
+            "Somewhat similar",
+            "Similar"
           ],
           "label_thresholds": [
             0,
             0.5,
+            0.7,
             1
           ]
         },
         "readability_config": {
           "threshold": 0.5,
           "custom_labels": [
-            "readable",
-            "non readable"
+            "Sophisticated",
+            "Moderate",
+            "Easy"
           ],
           "label_thresholds": [
             0,
-            0.5,
+            0.3,
+            0.6,
             1
           ]
         },
         "clarity_config": {
           "threshold": 0.5,
           "custom_labels": [
-            "Not clear",
+            "Not Clear",
+            "Partially Clear",
             "Clear"
+
           ],
           "label_thresholds": [
             0,
             0.5,
+            0.74,
             1
           ]
         },
         "narrative_continuity_config": {
           "threshold": 0.5,
           "custom_labels": [
-            "False",
-            "True"
+            "Non Continuous",
+            "Continuous"
           ],
           "label_thresholds": [
             0,
@@ -138,8 +155,8 @@
         "model_refusal_config": {
           "threshold": 0.5,
           "custom_labels": [
-            "False",
-            "True"
+            "Not Detected",
+            "Detected"
           ],
           "label_thresholds": [
             0,
@@ -149,8 +166,8 @@
         "data_leakage_config": {
           "threshold": 0.5,
           "custom_labels": [
-            "False",
-            "True"
+            "Not Detected",
+            "Detected"
           ],
           "label_thresholds": [
             0,
@@ -160,12 +177,24 @@
         "creativity_config": {
           "threshold": 0.5,
           "custom_labels": [
-            "Good",
-            "Average"
+            "Not Creative",
+            "Creative"
           ],
           "label_thresholds": [
             0,
             0.5,
+            1
+          ]
+        },
+        "diversity_config": {
+          "threshold": 0.5,
+          "custom_labels": [
+            "Redundant",
+            "Non Redundant"
+          ],
+          "label_thresholds": [
+            0,
+            0.41,
             1
           ]
         }
