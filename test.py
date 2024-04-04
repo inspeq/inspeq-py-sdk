@@ -1,45 +1,31 @@
-# API_KEY = "in-f579f248eb74d2bbf5c4fa40bac03298"
-API_KEY = "in-db252abf651a3c7fe70a3b093f17e970"
+API_KEY = ""
 
-
-
-# data = [{
-#         "response": "response1",
-#         "context" : "this",
-#         "prompt":"this is prompt yeah"
-#     }
-    
-# ]
-
-data = {
-        "response": "response1",
-        "context" : "this",
-        "prompt":"this is prompt yeah"
-    }
     
 from inspeq.client import InspeqEval
-metrics_list = [ "response_tone"]
+
+
+from inspeq.client import InspeqEval
+
+
+
 inspeq_eval = InspeqEval(inspeq_api_key= API_KEY)
 
-metrics_config = {
-    "response_tone_config": {
-        "threshold": 0.5,
-        "custom_labels": ["string", "ss"],
-        "label_thresholds": [0,0.5,1]
-    }
-}
 
-config_input=  {
-    "threshold": 0.5,
-    "custom_labels": [
-      "strisssssssssssssssssssng"
-    ],
-    "label_thresholds": [
-      0,1
-    ]
-  }
+input_data = {
+           "response": "Paris is the capital of France.",
+                      "context": "Paris is the capital of France."
+
+       }
 
 
-results = inspeq_eval.clarity(input_data= data ,config_input= config_input)
+config_input= {
+       "threshold": 0.2222225,
+       "custom_labels": ["custom_label_1","custom_label_2"],
+       "label_thresholds": [0, 1],
+   }
+
+
+results = inspeq_eval.model_refusal(input_data= input_data ,config_input= config_input ,task_name="your_task_name")
+
 
 print(results)

@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="inspeqai",
-    version="1.0.13",
+    version="1.0.14",
     packages=find_packages(include=["inspeq*"]),
     license="Apache 2.0",
     author="Inspeq",

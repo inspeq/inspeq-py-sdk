@@ -4,7 +4,7 @@ import json
 import os
 
 
-API_URL = "https://stage.inspeq.ai" 
+API_URL = "https://app.inspeq.ai" 
 
 # Configure logging
 logger = logging.getLogger(__name__)
