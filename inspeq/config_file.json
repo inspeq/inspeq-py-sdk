@@ -156,6 +156,18 @@
             0,
             1
           ]
+        },
+        "creativity_config": {
+          "threshold": 0.5,
+          "custom_labels": [
+            "Good",
+            "Average"
+          ],
+          "label_thresholds": [
+            0,
+            0.5,
+            1
+          ]
         }
       }
     },

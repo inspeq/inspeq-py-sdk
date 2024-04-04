@@ -4,7 +4,7 @@ import json
 import os
 
 
-API_URL = "https://app.inspeq.ai" 
+API_URL = "https://api.inspeq.ai" 
 
 # Configure logging
 logger = logging.getLogger(__name__)
@@ -19,14 +19,15 @@ class InspeqEval:
             raise ValueError("No SDK API key provided.")
 
         if config_file is None:
-            script_dir = os.path.dirname(os.path.abspath(__file__))
-            config_file = os.path.join(script_dir, 'config_file.json')
+            script_dir = os.path.dirname(os.path.realpath(__file__))
 
+            # Construct the full path to the JSON file
+            config_file_path = os.path.join(script_dir, 'config_file.json')
         try:
-            with open(config_file, 'r') as f:
+            with open(config_file_path, 'r') as f:
                 self.config = json.load(f)
         except FileNotFoundError:
-            raise FileNotFoundError(f"Config file '{config_file}' not found.")
+            raise FileNotFoundError(f"Config file '{config_file_path}' not found.")
         except json.JSONDecodeError as e:
             raise ValueError(f"Error loading JSON from config file: {e}")
         
