@@ -66,55 +66,26 @@ Create main.py and you can use below code snippet
 from inspeq.client import Evaluator
 
 #initialization
-API_KEY = "your_sdk_api_key"
-inspeq_instance = Evaluator(sdk_api_key=API_KEY)
+API_KEY = "your_inspeq_sdk_key"
 
-# Example input data
-input_data={
-    "prompt":"llm_prompt",
-     "response":" llm_output "
-  }
+from inspeq.client import InspeqEval
+
+input_data = {
+       "prompt":"What is the capital of France?",
+       "response": "Paris is the capital of France",
+       "context" : "Paris is the capital of France and its largest city"
+   }
 
 '''Note : Do not change the structure of input data keep the structure as it
 is. Put your data at places of llm_prompt, llm_output
 and your_llm_output .
 
 '''
-print("Word limit test :", inspeq_instance.word_limit_test(input_data))
+results = inspeq_eval.diversity(input_data= input_data  ,task_name="testing_part_1")
+print(results)
 
 
 ```
-
-#### Get all metrics
-
-```py
-
-from inspeq.client import Evaluator
-
-#initialization
-API_KEY = "your_sdk_api_key"
-inspeq_instance = Evaluator(sdk_api_key=API_KEY)
-
-# Example input data
-# three parameters are required for get_all_metrics you can see below ,do not change structure inside the input data
-input_data={
-    "prompt":"your_llm_prompt",
-    "context":"your_llm_context",
-     "response":"your_llm_output "
-  }
-
-'''Note : Do not change the structure of input data keep the structure as it
-is you need to include prompt,context,response as it is . Put your data at places of your_llm_prompt, your_llm_context
-and your_llm_output .
-
-'''
-#get all metrics in one function
-
-print(inspeq_instance.get_all_metrics(input_data))
-
-```
-
-After you run the file all metrics result will print in your terminal or output window.
 
 ### All Metrics provided by Inspeq sdk
 
