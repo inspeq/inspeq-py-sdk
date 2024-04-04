@@ -5,8 +5,9 @@ with open("README.md", "r") as f:
 
 setup(
     name="inspeqai",
-    version="1.0.12",
+    version="1.0.18",
     packages=find_packages(include=["inspeq*"]),
+    package_data={'inspeq': ['config_file.json']},
     license="Apache 2.0",
     author="Inspeq",
     install_requires=[

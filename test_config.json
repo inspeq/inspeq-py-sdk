@@ -1,0 +1,76 @@
+
+{
+    "global_communication_mode": "async",
+    "auto_instrument_mode": 1, 
+
+    "evaluations": {
+      "LLM": {
+        "communication_mode": "sync",
+        "auto_instrument_mode": 1,
+        "configurations": {
+          "answer_relevance_config": {
+            "threshold": 0.5,
+            "custom_labels": ["irrelevant", "relevant"],
+            "label_thresholds": [0, 1]
+          },
+          "response_tone_config": {
+            "threshold": 0.5,
+            "custom_labels": ["x", "y"],
+            "label_thresholds": [0,0.5 ,1]
+          },
+          "factual_consistency_config": {
+            "threshold": 0.5,
+            "custom_labels": ["low_confidence", "high_confidence"],
+            "label_thresholds": [0,1]
+          },
+          "word_limit_test_config": {
+            "threshold": 0.5,
+            "custom_labels": ["Failed", "Passed"]
+          },
+
+          "do_not_use_keywords_config": {
+            "threshold": 0.5,
+            "custom_labels": ["Failed", "Passed"]
+          },
+          "coherence_config": {
+            "threshold": 0.5,
+            "custom_labels": ["incoherent", "coherent"],
+            "label_thresholds": [0,1]
+          }
+
+        }
+      },
+      "RAGS": {
+        "communication_mode": "sync",
+        "auto_instrument_mode": 1,
+        "configurations": {
+          "retrieval_relevance_config": {
+            "threshold": 0.5,
+            "custom_labels": ["relevant", "irrelevant"],
+            "label_thresholds": [0, 1]
+          },
+          "response_coherence_config": {
+            "threshold": 0.5,
+            "custom_labels": ["coherent", "incoherent"],
+            "label_thresholds": [0]
+          }
+          }
+      },
+      "SQL": {
+        "communication_mode": "async",
+        "auto_instrument_mode": 1,
+        "configurations": {
+          "query_performance_config": {
+            "threshold": 0.5,
+            "custom_labels": ["efficient", "inefficient"],
+            "label_thresholds": [0, 1]
+          },
+          "data_security_config": {
+            "threshold": 0.5,
+            "custom_labels": ["secure", "insecure"],
+            "label_thresholds": [0, 1]
+          }
+        }
+      }
+    }
+  }

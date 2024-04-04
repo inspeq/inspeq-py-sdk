@@ -1,59 +1,34 @@
-from inspeq.client import Evaluator
-from inspeq.client import Eval
+API_KEY = ""
 
-# old way to call th metrics
-API_KEY = "in-f579f248eb74d2bbf5c4fa40bac03298"
-inspeq_instance = Evaluator(sdk_api_key=API_KEY)
+    
+from inspeq.client import InspeqEval
 
-input_data =    {
-    "prompt": "string",
-    "context": "string",
-    "response": "string"
-  }
+
+
+
+inspeq_eval = InspeqEval(inspeq_api_key= API_KEY)
+
+
+input_data={
+   "context": "Paris is the capital of France and its largest city.",
+   "response":"Paris is the capital of France."
+ }
+
 
 config_input= {
-        "threshold": 0.5,
-        "custom_labels": ["string","dsfd"],
-        "label_thresholds": [0,0.5],
-    }
-
-result=inspeq_instance.data_leakage(input_data,config_input, task_name="test_task")
-print(result)
-
-#
-prompt = "query_text" # these are required fields depending on metrics
-context = "context_text"  # these are required fields depending on metrics
-response = "output_text"  # these are required fields depending on metrics
-task_name = "abc" #it is compulsory to provide whatever you want to give the task name.
-
-metrics_list = [
-    "DIVERSITY",
-    "Answer_relevance",
-    "conceptual_similarity"
-]
-metrics_config = {
-    "diversity_config": {
-        "threshold": 0.5,
-        "custom_labels": ["string"],
-        "label_thresholds": [0],
-    },
-    "conceptual_similarity_config": {
-        "threshold": 0.5,
-        "custom_labels": ["string"],
-        "label_thresholds": [0],
-    }
-}
-# inspeq_instance = Eval(API_KEY)
-# result = inspeq_instance.evaluate_task(prompt, context, response, task_name, metrics_list, metrics_config)
-# print(result)
+       "threshold": 0.5,
+       "custom_labels": ["custom_label_1","custom_label_2"],
+       "label_thresholds": [0,0.5, 1],
+   }
 
 
-payload = {
-            "metrics_list": metrics_list,
-            "input_data": {
-                "llm_input_query": prompt,
-                "llm_input_context": context,
-                "llm_output": response,
-            },
-            "metrics_config": metrics_config or {},
-        }
+
+
+results = inspeq_eval.factual_consistency(input_data= input_data ,config_input= config_input ,task_name="your_task_name")
+
+
+print(results)
+
+
+
+
