@@ -32,7 +32,7 @@ class InspeqEval:
             raise ValueError(f"Error loading JSON from config file: {e}")
         
     def make_api_request(self, endpoint, input_data, config_input=None, task_name=None):
-        url = f"{API_URL}/api/v1/sdk/{endpoint}"
+        url = f"{self.API_URL}/api/v1/sdk/{endpoint}"
 
         prompt = input_data.get("prompt", "")
         context = input_data.get("context", "")
