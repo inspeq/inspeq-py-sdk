@@ -132,7 +132,6 @@
             "Not Clear",
             "Partially Clear",
             "Clear"
-
           ],
           "label_thresholds": [
             0,
@@ -195,6 +194,31 @@
           "label_thresholds": [
             0,
             0.41,
+            1
+          ]
+        },
+        "insecure_output_config": {
+          "threshold": 0.5,
+          "custom_labels": [
+            "Not Detected",
+            "Detected"
+          ],
+          "label_thresholds": [
+            0,
+            1
+          ]
+        },
+        "prompt_injection_config": {
+          "threshold": 0.5,
+          "custom_labels": [
+            "Low_Confidence",
+            "Medium_Confidence",
+            "High_Confidence"
+          ],
+          "label_thresholds": [
+            0,
+            0.5,
+            0.7,
             1
           ]
         }

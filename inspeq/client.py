@@ -240,6 +240,26 @@ class InspeqEval:
             raise ValueError("'response' is not provided")
         
         return self.make_api_request("narrative_continuity", input_data, config_input, task_name)
+    
+    def prompt_injection(self, input_data, config_input= None, task_name= None):
+        # Validate input_data
+        prompt_data = input_data.get("prompt", "").strip()
+        config_input = config_input if config_input else self.get_default_config("prompt_injection")
+
+        if not prompt_data:
+            raise ValueError("'input_prompt' is not provided")
+
+        return self.make_api_request("prompt_injection", input_data, config_input, task_name)
+    
+    def insecure_output(self, input_data, config_input= None, task_name= None):
+        # Validate input_data
+        prompt_data = input_data.get("response", "").strip()
+        config_input = config_input if config_input else self.get_default_config("insecure_output")
+
+        if not prompt_data:
+            raise ValueError("'response' is not provided")
+
+        return self.make_api_request("insecure_output", input_data, config_input, task_name)
 
     def evaluate_llm_task(self, data, metrics_list, metrics_config=None, task_name=None):
         results = {}
