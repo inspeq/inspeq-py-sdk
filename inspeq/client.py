@@ -253,11 +253,11 @@ class InspeqEval:
     
     def insecure_output(self, input_data, config_input= None, task_name= None):
         # Validate input_data
-        prompt_data = input_data.get("prompt", "").strip()
+        prompt_data = input_data.get("response", "").strip()
         config_input = config_input if config_input else self.get_default_config("insecure_output")
 
         if not prompt_data:
-            raise ValueError("'input_prompt' is not provided")
+            raise ValueError("'response' is not provided")
 
         return self.make_api_request("insecure_output", input_data, config_input, task_name)
 
