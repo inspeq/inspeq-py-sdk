@@ -221,6 +221,31 @@
             0.7,
             1
           ]
+        },
+        "toxicity_config": {
+          "threshold": 0.5,
+          "custom_labels": [
+            "Not Toxic",
+            "Toxic"
+          ],
+          "label_thresholds": [
+            0,
+            1
+          ]
+        },
+        "bias_config": {
+          "threshold": 0.5,
+          "custom_labels": [
+            "Unbiased",
+            "Slightly Biased",
+            "Extreme Bias"
+          ],
+          "label_thresholds": [
+            0,
+            0.4,
+            0.6,
+            1
+          ]
         }
       }
     },

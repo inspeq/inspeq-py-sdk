@@ -260,7 +260,27 @@ class InspeqEval:
             raise ValueError("'response' is not provided")
 
         return self.make_api_request("insecure_output", input_data, config_input, task_name)
+    
+    def toxicity(self, input_data, config_input= None, task_name= None):
+        # Validate input_data
+        prompt_data = input_data.get("response", "").strip()
+        config_input = config_input if config_input else self.get_default_config("toxicity")
 
+        if not prompt_data:
+            raise ValueError("'response' is not provided")
+
+        return self.make_api_request("toxicity", input_data, config_input, task_name)
+
+    def bias(self, input_data, config_input= None, task_name= None):
+        # Validate input_data
+        prompt_data = input_data.get("response", "").strip()
+        config_input = config_input if config_input else self.get_default_config("bias")
+
+        if not prompt_data:
+            raise ValueError("'response' is not provided")
+
+        return self.make_api_request("bias", input_data, config_input, task_name)
+    
     def evaluate_llm_task(self, data, metrics_list, metrics_config=None, task_name=None):
         results = {}
         for metric in metrics_list:
