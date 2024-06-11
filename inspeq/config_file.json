@@ -225,11 +225,14 @@
         "toxicity_config": {
           "threshold": 0.5,
           "custom_labels": [
-            "Not Toxic",
-            "Toxic"
+            "Not toxic",
+            "Toxic",
+            "Severly Toxic"
           ],
           "label_thresholds": [
             0,
+            0.4,
+            0.6,
             1
           ]
         },
