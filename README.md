@@ -1,140 +1,120 @@
-# Inspeqai python SDK
+Sure! Here's a polished and professional version of the documentation for the Inspeqai Python SDK, including the addition of the `project_id` parameter.
 
-- **Website:** https://www.inspeq.ai
-- **Inspeq app:** https://app.inspeq.ai
-- **Detailed Documentation:** https://docs.inspeq.ai
+---
 
-## Quikstart
+# Inspeqai Python SDK
 
-### Create a Virtual Environment in Linux and Windows
+- **Website:** [Inspeq.ai](https://www.inspeq.ai)
+- **Inspeq App:** [Inspeq App](https://app.inspeq.ai)
+- **Detailed Documentation:** [Inspeq Documentation](https://docs.inspeq.ai)
 
-### Linux OS / MAC OS
+## Quickstart Guide
 
-### Using venv (Python 3)
+### Creating a Virtual Environment
 
-1. Open a terminal.
-2. Navigate to the directory where you want to create the virtual environment.
-3. Run the following command:
+To ensure a clean and isolated environment for your project, it’s recommended to create a virtual environment.
 
-```bash
-   python3 -m venv venv
-```
-
-#### Activate it
-
-```bash
-  source venv/bin/activate
-
-```
-
-### windows
+#### Linux/MacOS
 
 1. Open a terminal.
-2. Navigate to the directory where you want to create the virtual environment.
-3. Run the following command:
+2. Navigate to your project directory.
+3. Create a virtual environment:
 
-```bash
-   python -m venv venv
-```
+    ```bash
+    python3 -m venv venv
+    ```
 
-#### Activate it
+4. Activate the virtual environment:
 
-```bash
-venv\Scripts\activate
-```
+    ```bash
+    source venv/bin/activate
+    ```
 
-#### Make sure your environment is activated everytime you use package
+#### Windows
+
+1. Open a terminal.
+2. Navigate to your project directory.
+3. Create a virtual environment:
+
+    ```bash
+    python -m venv venv
+    ```
+
+4. Activate the virtual environment:
+
+    ```bash
+    venv\Scripts\activate
+    ```
+
+**Note:** Ensure your environment is activated every time you use the package.
 
 ### SDK Installation
 
-Enter below Command in terminal
+Install the Inspeqai SDK using pip:
 
 ```sh
 pip install inspeqai
 ```
 
-### Get SDK API keys
+### Obtain SDK API Keys
 
-Get your API keys from <a href="https://app.inspeq.ai/" target="_blank">Here</a>
+Get your API keys from [here](https://app.inspeq.ai/).
 
 ### Usage
 
-Create main.py and you can use below code snippet
+Create a `main.py` file and use the following code snippet to get started:
 
-```py
-
-from inspeq.client import Evaluator
-
-#initialization
-API_KEY = "your_inspeq_sdk_key"
-
+```python
 from inspeq.client import InspeqEval
 
+# Initialization
+API_KEY = "your_inspeq_sdk_key"
+PROJECT_ID = "your_project_id"
+
+inspeq_eval = InspeqEval(inspeq_api_key=API_KEY, project_id=PROJECT_ID)
+
 input_data = {
-       "prompt":"What is the capital of France?",
-       "response": "Paris is the capital of France",
-       "context" : "Paris is the capital of France and its largest city"
-   }
+    "prompt": "What is the capital of France?",
+    "response": "Paris is the capital of France",
+    "context": "Paris is the capital of France and its largest city"
+}
 
-'''Note : Do not change the structure of input data keep the structure as it
-is. Put your data at places of llm_prompt, llm_output
-and your_llm_output .
-
-'''
-results = inspeq_eval.diversity(input_data= input_data  ,task_name="testing_part_1")
+# Note: Do not change the structure of input_data. Keep the structure as is.
+results = inspeq_eval.diversity(input_data=input_data, task_name="testing_part_1")
 print(results)
-
-
 ```
 
-### All Metrics provided by Inspeq sdk
+### All Metrics Provided by Inspeq SDK
 
-Different metrics required different parameters you can visit official documentation
-
-Click <a href="https://docs.inspeq.ai/" target="_blank">Here</a>
+Different metrics require different parameters. You can visit the [official documentation](https://docs.inspeq.ai/) for detailed information.
 
 ### Supported Features
 
-Metrices:
+**Metrics:**
 
-- Factual Consistency:
-  Factual Consistency (FC) pertains to the precision and correctness of information articulated in text produced by Large Language Models (LLMs). It involves the comparison of generated information with the given context, input, or anticipated factual knowledge.
+- **Factual Consistency:** Ensures the precision and correctness of information in the generated text compared to the given context or anticipated factual knowledge.
+- **Do Not Use Keywords:** Verifies that certain keywords are not present in the response.
+- **Answer Relevance:** Assesses the alignment between the model's responses and the intended meaning of the input.
+- **Word Limit Test:** Checks if the generated text adheres to specified word limits.
+- **Response Tonality:** Analyzes the type of tone or overall sentiment highlighted in the response.
+- **Conceptual Similarity:** Measures the semantic similarity or relatedness between the generated response and the provided context.
+- **Coherence:** Evaluates the organization, structure, and ease of understanding of the generated text.
+- **Readability:** Assesses if the generated text is appropriate for the target audience’s reading level.
+- **Clarity:** Measures the clarity of the response in terms of language and structure.
+- **Model Refusal:** Detects if the model responds with a refusal response when appropriate.
+- **Data Leakage:** Identifies if the model response contains any personal information such as credit card numbers, phone numbers, emails, URLs, etc.
+- **Creativity:** Evaluates the creativity of the generated content based on lexical diversity, contextual similarity, and hallucination score.
+- **Diversity:** Measures the diversity of vocabulary used in the text.
+- **Narrative Continuity:** Evaluates whether the generated response maintains coherence and logical flow with the preceding narrative.
 
-- Do Not Use Keywords:
-  Test the List of keywords that should not be present in the response.
-  
-- Answer Relevance:
-  Answer Relevance assesses the alignment between the model's responses and the intended meaning of the input.
+---
 
-- Word Limit Test:
-  Check if the generated text adheres to specified word limits.
+### Additional Resources
 
-- Response Tonality:
-  Tonality refers to the type of tone or overall sentiment highlighted in the response.
+For more detailed information and advanced usage, refer to the [Inspeq Documentation](https://docs.inspeq.ai/).
 
-- Conceptual Similarity:
-  This refers to the semantic similarity or relatedness between response generated and provided context.
+By following these instructions, you will be able to efficiently set up and utilize the Inspeqai Python SDK. If you have any questions or need further assistance, please refer to the official documentation or contact support.
 
-- Coherence:
-  The ability of the LLM to generate text that is organized, well-structured, and easy to understand.
+---
 
-- Readibility:
-  Readability scores help assess whether the LLM’s generated text is appropriate for the target audience’s reading level.
-
-- Clarity:
-  Clarity is a subjective metric and refers to the response’s clarity in terms of language and structure.
-
-- Model Refusal:
-  Model refusal detects whether the model responds with a refusal response or not. Example of a refusal response - "I'm sorry, but I cannot provide you with a credit card number. It is against ethical and legal guidelines to share such sensitive information. If you have any other questions or need assistance with something else, feel free to ask."
-
-- Data Leakage:
-  Data leakage detects whether the model response contains any personal information such as credit card numbers, phone numbers, emails, urls etc.
-
-- Creativity:
-  Creativity is also a subjective concept, especially in AI-generated content. LLMs can be very creative but the results are mostly evaluated by humans. For our story generation and document summarization use cases, we define this metric as a combination of different metrics that could provide a more comprehensive evaluation. We use lexical diversity score, contextual similarity score and hallucination score to evaluate creativity.
-
-- Diversity:
-  Lexical diversity metrics assess the diversity of vocabulary used in a piece of text. Higher lexical diversity generally indicates a broader range of words and can contribute to more natural-sounding language.
-
-- Narrative Continuity:
-  Narrative continuity metric is a measure that evaluates whether a generated response maintains coherence and logical flow with the preceding narrative, without introducing abrupt or illogical shifts (ex.- story jumps). It analyzes factors like topic consistency, event/character continuity, and overall coherence to detect discontinuities in the narrative.
+This version includes detailed steps for setting up the environment, installing the SDK, and using it, as well as a comprehensive list of features supported by the Inspeq SDK. It also highlights the importance of the `project_id` parameter.
