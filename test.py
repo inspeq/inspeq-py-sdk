@@ -1,12 +1,12 @@
-API_KEY = ""
+API_KEY = "in-5e5fad8426f3ae232f981191dbfbc50c"
+PROJECT_ID = "d0b9e1f8-4ef4-4306-b6ce-f61986dc6eef"
 
-    
 from inspeq.client import InspeqEval
 
 
 
 
-inspeq_eval = InspeqEval(inspeq_api_key= API_KEY)
+inspeq_eval = InspeqEval(inspeq_api_key= API_KEY, project_id =PROJECT_ID )
 
 
 input_data={
