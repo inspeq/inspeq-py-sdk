@@ -1,7 +1,3 @@
-Sure! Here's a polished and professional version of the documentation for the Inspeqai Python SDK, including the addition of the `project_id` parameter.
-
----
-
 # Inspeqai Python SDK
 
 - **Website:** [Inspeq.ai](https://www.inspeq.ai)
