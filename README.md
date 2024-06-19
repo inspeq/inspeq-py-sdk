@@ -67,17 +67,44 @@ from inspeq.client import InspeqEval
 API_KEY = "your_inspeq_sdk_key"
 PROJECT_ID = "your_project_id"
 
+from inspeq.client import InspeqEval
+
 inspeq_eval = InspeqEval(inspeq_api_key=API_KEY, project_id=PROJECT_ID)
 
-input_data = {
-    "prompt": "What is the capital of France?",
-    "response": "Paris is the capital of France",
-    "context": "Paris is the capital of France and its largest city"
+input_data = [{
+    "llm_input_query": "string", 
+    "llm_input_context": "string",  
+    "llm_output": "string" 
+}]
+
+metrics_config = {
+    "response_tone_config": {
+        "threshold": 0.5,
+        "custom_labels": [
+            "Negative",
+            "Neutral",
+            "Positive"
+        ],
+        "label_thresholds": [
+            0,
+            0.5,
+            0.7,
+            1
+        ]
+    }
 }
 
-# Note: Do not change the structure of input_data. Keep the structure as is.
-results = inspeq_eval.diversity(input_data=input_data, task_name="testing_part_1")
-print(results)
+try:
+    results = inspeq_eval.evaluate_llm_task(
+        input_data=input_data,
+        task_name="your_task_name",
+        metrics_config=metrics_config,
+        metrics_list=["response_tone"]
+    )
+    print(results)
+except ValueError as e:
+    print(e)
+
 ```
 
 ### All Metrics Provided by Inspeq SDK

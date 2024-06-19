@@ -340,32 +340,32 @@ class InspeqEval:
         )
 
     def evaluate_llm_task(
-        self, data, metrics_list, metrics_config=None, task_name=None
+        self, metrics_list, input_data, task_name=None, metrics_config=None
     ):
-        results = {}
-        for metric in metrics_list:
-            metric = metric.lower()
-            try:
-                metric_conf = self.get_metric_config(metric, metrics_config)
-            except KeyError as e:
-                raise ValueError(
-                    f"Metric '{metric}' not found in metrics configuration: {e}"
-                )
+        url = 'https://api.inspeq.ai/api/v2/sdk/evaluate_llm'
+        headers = {
+            'accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+        request_body = {
+            "project_id": self.project_id,
+            "secret_key": self.inspeq_api_key,
+            "metrics": metrics_list,
+            "input_data": input_data,
+            "task_name": task_name
+        }
+        payload = {
+            "request_body": request_body,
+            "metrics_config": metrics_config or {}
+        }
 
-            metric_results = []
-            for unit_data in data:
-                try:
-                    response_data = getattr(self, metric)(
-                        input_data=unit_data,
-                        config_input=metric_conf,
-                        task_name=task_name,
-                    )
-                    metric_results.append(response_data)
-                except Exception as e:
-                    raise ValueError(f"Could not evaluate metric '{metric}' as: {e}")
-            results[metric] = metric_results
-        return results
+        response = requests.post(url, headers=headers, json=payload)
 
+        if response.status_code == 200:
+            return response.json()
+        else:
+            raise ValueError(f"API call failed with status code {response.status_code}: {response.text}")
+        
     def get_metric_config(self, metric_name, metrics_config):
         if metrics_config and metric_name + "_config" in metrics_config:
             return metrics_config[metric_name + "_config"]
