@@ -340,9 +340,9 @@ class InspeqEval:
         )
 
     def evaluate_llm_task(
-        self, metrics_list, input_data, task_name=None, metrics_config=None
+        self, metrics_list, input_data, task_name=None, metrics_config=None 
     ):
-        url = 'https://api.inspeq.ai/api/v2/sdk/evaluate_llm'
+        url = f"{self.API_URL}/api/v2/sdk/sdk/evaluate_llm"
         headers = {
             'accept': 'application/json',
             'Content-Type': 'application/json'
