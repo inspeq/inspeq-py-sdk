@@ -1,4 +1,4 @@
-# Inspeqai Python SDK
+# Inspeq Python SDK
 
 - **Website:** [Inspeq.ai](https://www.inspeq.ai)
 - **Inspeq App:** [Inspeq App](https://app.inspeq.ai)
@@ -6,138 +6,114 @@
 
 ## Quickstart Guide
 
-### Creating a Virtual Environment
+### Installation
 
-To ensure a clean and isolated environment for your project, it’s recommended to create a virtual environment.
+Install the Inspeq SDK using pip:
 
-#### Linux/MacOS
-
-1. Open a terminal.
-2. Navigate to your project directory.
-3. Create a virtual environment:
-
-    ```bash
-    python3 -m venv venv
-    ```
-
-4. Activate the virtual environment:
-
-    ```bash
-    source venv/bin/activate
-    ```
-
-#### Windows
-
-1. Open a terminal.
-2. Navigate to your project directory.
-3. Create a virtual environment:
-
-    ```bash
-    python -m venv venv
-    ```
-
-4. Activate the virtual environment:
-
-    ```bash
-    venv\Scripts\activate
-    ```
-
-**Note:** Ensure your environment is activated every time you use the package.
-
-### SDK Installation
-
-Install the Inspeqai SDK using pip:
-
-```sh
+```bash
 pip install inspeqai
 ```
 
-### Obtain SDK API Keys
+### Obtain SDK API Key and Project key 
 
-Get your API keys from [here](https://app.inspeq.ai/).
+Get your API keys from the [Inspeq App](https://app.inspeq.ai)
 
 ### Usage
+Here's a basic example of how to use the Inspeq SDK:
 
-Create a `main.py` file and use the following code snippet to get started:
 
-```python
+```
 from inspeq.client import InspeqEval
 
-# Initialization
-API_KEY = "your_inspeq_sdk_key"
-PROJECT_ID = "your_project_id"
+# Initialize the client
+INSPEQ_API_KEY = "your_inspeq_sdk_key"
+INSPEQ_PROJECT_ID = "your_project_id"
+INSPEQ_API_URL = "your_inspeq_backend_url" # Required only for our on-prem customers
 
-from inspeq.client import InspeqEval
 
-inspeq_eval = InspeqEval(inspeq_api_key=API_KEY, project_id=PROJECT_ID)
+inspeq_eval = InspeqEval(inspeq_api_key=INSPEQ_API_KEY, inspeq_project_id=INSPEQ_PROJECT_ID)
 
+
+# Prepare input data
 input_data = [{
-    "llm_input_query": "string", 
-    "llm_input_context": "string",  
-    "llm_output": "string" 
+    "prompt": "What is the capital of France?",
+    "response": "Paris is the capital of France.",
+    "context": "The user is asking about European capitals."
 }]
 
-metrics_config = {
-    "response_tone_config": {
-        "threshold": 0.5,
-        "custom_labels": [
-            "Negative",
-            "Neutral",
-            "Positive"
-        ],
-        "label_thresholds": [
-            0,
-            0.5,
-            0.7,
-            1
-        ]
-    }
-}
+# Define metrics to evaluate
+metrics_list = ["RESPONSE_TONE", "FACTUAL_CONSISTENCY", "ANSWER_RELEVANCE"]
 
 try:
     results = inspeq_eval.evaluate_llm_task(
+        metrics_list=metrics_list,
         input_data=input_data,
-        task_name="your_task_name",
-        metrics_config=metrics_config,
-        metrics_list=["response_tone"]
+        task_name="capital_question"
     )
     print(results)
-except ValueError as e:
-    print(e)
-
+except Exception as e:
+    print(f"An error occurred: {str(e)}")
+    
 ```
 
-### All Metrics Provided by Inspeq SDK
 
-Different metrics require different parameters. You can visit the [official documentation](https://docs.inspeq.ai/) for detailed information.
+## Features
 
-### Supported Features
+The Inspeq SDK provides a range of metrics to evaluate language model outputs:
 
-**Metrics:**
+1. **Response Tone:** Analyzes the overall sentiment of the response.
+2. **Factual Consistency:** Checks the accuracy of information against the given context.
+3. **Answer Relevance:** Assesses how well the response addresses the input query.
+4. **Conceptual Similarity:** Measures semantic similarity between the response and context.
+5. **Readability:** Evaluates the complexity and readability of the text.
+6. **Coherence:** Assesses the logical flow and organization of the response.
+7. **Clarity:** Measures how clear and understandable the response is.
+8. **Do Not Use Keywords:** Checks for the presence of specified keywords.
+9. **Word Count Limit:** Verifies if the response adheres to specified word limits.
+10. **Model Refusal:** Detects if the model appropriately refuses to answer certain queries.
+11. **Data Leakage:** Identifies potential leakage of sensitive information.
+12. **Creativity:** Evaluates the originality and inventiveness of the response.
+13. **Diversity:** Measures the variety of vocabulary and concepts used.
+14. **Narrative Continuity:** Checks if the response maintains a consistent narrative.
 
-- **Factual Consistency:** Ensures the precision and correctness of information in the generated text compared to the given context or anticipated factual knowledge.
-- **Do Not Use Keywords:** Verifies that certain keywords are not present in the response.
-- **Answer Relevance:** Assesses the alignment between the model's responses and the intended meaning of the input.
-- **Word Limit Test:** Checks if the generated text adheres to specified word limits.
-- **Response Tonality:** Analyzes the type of tone or overall sentiment highlighted in the response.
-- **Conceptual Similarity:** Measures the semantic similarity or relatedness between the generated response and the provided context.
-- **Coherence:** Evaluates the organization, structure, and ease of understanding of the generated text.
-- **Readability:** Assesses if the generated text is appropriate for the target audience’s reading level.
-- **Clarity:** Measures the clarity of the response in terms of language and structure.
-- **Model Refusal:** Detects if the model responds with a refusal response when appropriate.
-- **Data Leakage:** Identifies if the model response contains any personal information such as credit card numbers, phone numbers, emails, URLs, etc.
-- **Creativity:** Evaluates the creativity of the generated content based on lexical diversity, contextual similarity, and hallucination score.
-- **Diversity:** Measures the diversity of vocabulary used in the text.
-- **Narrative Continuity:** Evaluates whether the generated response maintains coherence and logical flow with the preceding narrative.
+## Advanced Usage
+### Custom Configurations
 
----
+You can provide custom configurations for metrics:
 
-### Additional Resources
+```
+metrics_config = {
+    "response_tone_config": {
+        "threshold": 0.5,
+        "custom_labels": ["Negative", "Neutral", "Positive"],
+        "label_thresholds": [0, 0.5, 0.7, 1]
+    }
+}
 
-For more detailed information and advanced usage, refer to the [Inspeq Documentation](https://docs.inspeq.ai/).
+results = inspeq_eval.evaluate_llm_task(
+    metrics_list=["RESPONSE_TONE"],
+    input_data=input_data,
+    task_name="custom_config_task",
+    metrics_config=metrics_config
+)
+```
 
-By following these instructions, you will be able to efficiently set up and utilize the Inspeqai Python SDK. If you have any questions or need further assistance, please refer to the official documentation or contact support.
+## Error Handling
 
----
+### The SDK uses custom exceptions for different types of errors:
 
-This version includes detailed steps for setting up the environment, installing the SDK, and using it, as well as a comprehensive list of features supported by the Inspeq SDK. It also highlights the importance of the `project_id` parameter.
+
+ **APIErrory:** For API related issues
+ **ConfigError:** For invalid  config related issues
+ **InputError:** For invalid input data
+
+
+## Additional Resources
+
+For detailed API documentation, visit [Inspeq Documentation](https://docs.inspeq.ai).
+For support or questions, contact our support team through the Inspeq App.
+
+
+## License
+
+This SDK is distributed under the terms of the Apache License 2.0.

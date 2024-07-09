@@ -162,7 +162,7 @@
             1
           ]
         },
-        "data_leakage_config": {
+        "insecure_output_config": {
           "threshold": 0.5,
           "custom_labels": [
             "Not Detected",
