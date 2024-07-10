@@ -16,7 +16,7 @@ pip install inspeqai
 
 ### Obtain SDK API Key and Project key 
 
-Get your API keys from the [Inspeq App](https://app.inspeq.ai)
+Get your API key and Project Key from the [Inspeq App](https://app.inspeq.ai)
 
 ### Usage
 Here's a basic example of how to use the Inspeq SDK:
@@ -56,6 +56,28 @@ except Exception as e:
     
 ```
 
+### Available Metrics 
+```
+metrics_list = [
+    "RESPONSE_TONE",
+    "ANSWER_RELEVANCE",
+    "FACTUAL_CONSISTENCY",
+    "CONCEPTUAL_SIMILARITY",
+    "READABILITY",
+    "COHERENCE",
+    "CLARITY",
+    "DIVERSITY",
+    "CREATIVITY",
+    "DATA_LEAKAGE",
+    "DO_NOT_USE_KEYWORDS",
+    "MODEL_REFUSAL",
+    "NARRATIVE_CONTINUITY",
+    "WORD_COUNT_LIMIT",
+    "CREATIVITY",
+    "DIVERSITY"
+    "INSECURE_OUTPUT"
+]
+```
 
 ## Features
 

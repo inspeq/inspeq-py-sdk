@@ -35,7 +35,7 @@ def inspeq_client():
 
 # customizable_metrics
 def test_evaluate_llm_task_more_thresholds(inspeq_client, random_task_name):
-    customizable_metrics = ["RESPONSE_TONE", "ANSWER_RELEVANCE", "FACTUAL_CONSISTENCY", "CONCEPTUAL_SIMILARITY", "READABILITY", "COHERENCE", "CLARITY", "DIVERSITY", "CREATIVITY"]
+    customizable_metrics = ["ANSWER_FLUENCY","GRAMMATICAL_CORRECTNESS", "RESPONSE_TONE", "ANSWER_RELEVANCE", "FACTUAL_CONSISTENCY", "CONCEPTUAL_SIMILARITY", "READABILITY", "COHERENCE", "CLARITY", "DIVERSITY", "CREATIVITY"]
     input_data = [
         {
             "prompt": "What is the capital of France?",
