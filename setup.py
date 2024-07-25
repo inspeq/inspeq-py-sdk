@@ -5,15 +5,16 @@ with open("README.md", "r") as f:
 
 setup(
     name="inspeqai",
-    version="1.0.23",
+    version="1.0.25",
     packages=find_packages(include=["inspeq*"]),
     package_data={'inspeq': ['config_file.json']},
     license="Apache 2.0",
     author="Inspeq",
+    author_email="support@inspeq.ai",
     install_requires=[
         "requests",
     ],
-    description="Inspeq AI SDK",
+    description="Inspeq AI Python SDK",
     long_description=long_description,  # Assign the content of your README to long_description
     long_description_content_type="text/markdown",  # Specify the type of content (markdown)
     python_requires=">=3.10",
@@ -23,3 +24,4 @@ setup(
         
     },
 )
+
