@@ -20,6 +20,18 @@
             1
           ]
         },
+        "answer_fluency_config": {
+          "threshold": 0.5,
+          "custom_labels": [
+            "PASS",
+            "FAIL"
+          ],
+          "label_thresholds": [
+            0,
+            0.5,
+            1
+          ]
+        },
         "response_tone_config": {
           "threshold": 0.5,
           "custom_labels": [
@@ -162,7 +174,7 @@
             1
           ]
         },
-        "data_leakage_config": {
+        "insecure_output_config": {
           "threshold": 0.5,
           "custom_labels": [
             "Not Detected",

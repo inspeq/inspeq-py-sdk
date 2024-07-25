@@ -10,7 +10,7 @@ Visit the Inspeq API Key Page.
 Sign in or create a new account if you haven't already.
 Generate your unique API key from the provided interface.
 
-Remember to keep your API key secure. It serves as the authentication token for accessing the Inspeq APIs from your scripts.
+Remember to keep your API key  and Project key secure. It serves as the authentication token for accessing the Inspeq APIs from your scripts.
 Integration
 
 The SDK seamlessly integrates into your Python projects, providing a straightforward way to incorporate advanced text evaluation capabilities.

@@ -1,60 +1,119 @@
-# Quick Start Guide for Inspeq Python SDK
+# Inspeq Python SDK
 
-## Installation
+- **Website:** [Inspeq.ai](https://www.inspeq.ai)
+- **Inspeq App:** [Inspeq App](https://platfom.inspeq.ai)
+- **Detailed Documentation:** [Inspeq Documentation](https://docs.inspeq.ai)
 
-1. **Create a Virtual Environment:**
+## Quickstart Guide
 
-   For Linux-based systems:
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate
+### Installation
+
+Install the Inspeq SDK using pip:
+
+```bash
+pip install inspeqai
+```
+
+### Obtain SDK API Key and Project key 
+
+Get your API keys from the [Inspeq App](https://platfom.inspeq.ai)
+
+### Usage
+Here's a basic example of how to use the Inspeq SDK:
 
 
-For Windows:
+```
+from inspeq.client import InspeqEval
 
-bash
+# Initialize the client
+INSPEQ_API_KEY = "your_inspeq_sdk_key"
+INSPEQ_PROJECT_ID = "your_project_id"
+INSPEQ_API_URL = "your_inspeq_backend_url" # Required only for our on-prem customers
 
-python3 -m venv venv
-venv\Scripts\activate
 
-    Install the SDK:
+inspeq_eval = InspeqEval(inspeq_api_key=INSPEQ_API_KEY, inspeq_project_id=INSPEQ_PROJECT_ID)
 
-    Use pip to install the Inspeq Python SDK:
 
-    bash
+# Prepare input data
+input_data = [{
+    "prompt": "What is the capital of France?",
+    "response": "Paris is the capital of France.",
+    "context": "The user is asking about European capitals."
+}]
 
-pip install inspeq-py-sdk
+# Define metrics to evaluate
+metrics_list = ["RESPONSE_TONE", "FACTUAL_CONSISTENCY", "ANSWER_RELEVANCE"]
 
-Initialize the SDK:
+try:
+    results = inspeq_eval.evaluate_llm_task(
+        metrics_list=metrics_list,
+        input_data=input_data,
+        task_name="capital_question"
+    )
+    print(results)
+except Exception as e:
+    print(f"An error occurred: {str(e)}")
+    
+```
 
-python
 
-    import os
-    from dotenv import load_dotenv
-    from client import Inspeq
+## Features
 
-    # Load environment variables and store your API key
-    load_dotenv()
-    API_KEY = os.getenv("YOUR_INSPEQ_SDK_API_KEY")
+The Inspeq SDK provides a range of metrics to evaluate language model outputs:
 
-    # Initialization of Inspeq Instance
-    inspeq_instance = Inspeq(API_KEY)
+1. **Response Tone:** Analyzes the overall sentiment of the response.
+2. **Factual Consistency:** Checks the accuracy of information against the given context.
+3. **Answer Relevance:** Assesses how well the response addresses the input query.
+4. **Conceptual Similarity:** Measures semantic similarity between the response and context.
+5. **Readability:** Evaluates the complexity and readability of the text.
+6. **Coherence:** Assesses the logical flow and organization of the response.
+7. **Clarity:** Measures how clear and understandable the response is.
+8. **Do Not Use Keywords:** Checks for the presence of specified keywords.
+9. **Word Count Limit:** Verifies if the response adheres to specified word limits.
+10. **Model Refusal:** Detects if the model appropriately refuses to answer certain queries.
+11. **Data Leakage:** Identifies potential leakage of sensitive information.
+12. **Creativity:** Evaluates the originality and inventiveness of the response.
+13. **Diversity:** Measures the variety of vocabulary and concepts used.
+14. **Narrative Continuity:** Checks if the response maintains a consistent narrative.
 
-Usage Example
+## Advanced Usage
+### Custom Configurations
 
-python
+You can provide custom configurations for metrics:
 
-# Example input data
-input_data = {
-    "llm_input_query": "your_llm_input_query",
-    "llm_input_context": "your_llm_input_context",
-    "llm_output": "your_llm_output",
+```
+metrics_config = {
+    "response_tone_config": {
+        "threshold": 0.5,
+        "custom_labels": ["Negative", "Neutral", "Positive"],
+        "label_thresholds": [0, 0.5, 0.7, 1]
+    }
 }
 
-# Evaluate grammatical correctness
-inspeq_instance.evaluate_grammatical_correctness(input_data)
-print("\n   grammatical_correctness is:")
+results = inspeq_eval.evaluate_llm_task(
+    metrics_list=["RESPONSE_TONE"],
+    input_data=input_data,
+    task_name="custom_config_task",
+    metrics_config=metrics_config
+)
+```
 
-# ... (continue with other metrics)
+## Error Handling
 
-Explore the available metrics and customize them based on your evaluation needs.
+### The SDK uses custom exceptions for different types of errors:
+
+
+ **APIErrory:** For API related issues
+ **ConfigError:** For invalid  config related issues
+ **InputError:** For invalid input data
+
+
+## Additional Resources
+
+For detailed API documentation, visit [Inspeq Documentation](https://docs.inspeq.ai).
+For support or questions, contact our support team through the Inspeq App.
+
+
+## License
+
+This SDK is distributed under the terms of the Apache License 2.0.
