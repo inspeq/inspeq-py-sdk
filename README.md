@@ -1,7 +1,7 @@
 # Inspeq Python SDK
 
 - **Website:** [Inspeq.ai](https://www.inspeq.ai)
-- **Inspeq App:** [Inspeq App](https://app.inspeq.ai)
+- **Inspeq App:** [Inspeq App](https://platform.inspeq.ai)
 - **Detailed Documentation:** [Inspeq Documentation](https://docs.inspeq.ai)
 
 ## Quickstart Guide
@@ -16,7 +16,7 @@ pip install inspeqai
 
 ### Obtain SDK API Key and Project key 
 
-Get your API key and Project Key from the [Inspeq App](https://app.inspeq.ai)
+Get your API key and Project Key from the [Inspeq App](https://platform.inspeq.ai)
 
 ### Usage
 Here's a basic example of how to use the Inspeq SDK:
