@@ -8,31 +8,36 @@
 
 ### Installation
 
-Install the Inspeq SDK using pip:
+Install the Inspeq SDK and python-dotenv using pip:
 
 ```bash
-pip install inspeqai
+pip install inspeqai python-dotenv
 ```
 
-### Obtain SDK API Key and Project key 
+The `python-dotenv` package is recommended for securely managing your environment variables, such as API keys.
+
+### Obtain SDK API Key and Project Key
 
 Get your API key and Project Key from the [Inspeq App](https://platform.inspeq.ai)
 
 ### Usage
-Here's a basic example of how to use the Inspeq SDK:
 
+Here's a basic example of how to use the Inspeq SDK with environment variables:
 
-```
+```python
+import os
+from dotenv import load_dotenv
 from inspeq.client import InspeqEval
 
-# Initialize the client
-INSPEQ_API_KEY = "your_inspeq_sdk_key"
-INSPEQ_PROJECT_ID = "your_project_id"
-INSPEQ_API_URL = "your_inspeq_backend_url" # Required only for our on-prem customers
+# Load environment variables
+load_dotenv()
 
+# Initialize the client
+INSPEQ_API_KEY = os.getenv("INSPEQ_API_KEY")
+INSPEQ_PROJECT_ID = os.getenv("INSPEQ_PROJECT_ID")
+INSPEQ_API_URL = os.getenv("INSPEQ_API_URL")  # Required only for our on-prem customers
 
 inspeq_eval = InspeqEval(inspeq_api_key=INSPEQ_API_KEY, inspeq_project_id=INSPEQ_PROJECT_ID)
-
 
 # Prepare input data
 input_data = [{
@@ -53,11 +58,19 @@ try:
     print(results)
 except Exception as e:
     print(f"An error occurred: {str(e)}")
-    
+```
+
+Make sure to create a `.env` file in your project root with your Inspeq credentials:
+
+```
+INSPEQ_API_KEY=your_inspeq_sdk_key
+INSPEQ_PROJECT_ID=your_project_id
+INSPEQ_API_URL=your_inspeq_backend_url
 ```
 
 ### Available Metrics 
-```
+
+```python
 metrics_list = [
     "RESPONSE_TONE",
     "ANSWER_RELEVANCE",
@@ -73,9 +86,9 @@ metrics_list = [
     "MODEL_REFUSAL",
     "NARRATIVE_CONTINUITY",
     "WORD_COUNT_LIMIT",
-    "CREATIVITY",
-    "DIVERSITY"
-    "INSECURE_OUTPUT"
+    "INSECURE_OUTPUT",
+    "ANSWER_FLUENCY",
+    "GRAMMATICAL_CORRECTNESS"
 ]
 ```
 
@@ -83,27 +96,47 @@ metrics_list = [
 
 The Inspeq SDK provides a range of metrics to evaluate language model outputs:
 
-1. **Response Tone:** Analyzes the overall sentiment of the response.
-2. **Factual Consistency:** Checks the accuracy of information against the given context.
-3. **Answer Relevance:** Assesses how well the response addresses the input query.
-4. **Conceptual Similarity:** Measures semantic similarity between the response and context.
-5. **Readability:** Evaluates the complexity and readability of the text.
-6. **Coherence:** Assesses the logical flow and organization of the response.
-7. **Clarity:** Measures how clear and understandable the response is.
-8. **Do Not Use Keywords:** Checks for the presence of specified keywords.
-9. **Word Count Limit:** Verifies if the response adheres to specified word limits.
-10. **Model Refusal:** Detects if the model appropriately refuses to answer certain queries.
-11. **Data Leakage:** Identifies potential leakage of sensitive information.
-12. **Creativity:** Evaluates the originality and inventiveness of the response.
-13. **Diversity:** Measures the variety of vocabulary and concepts used.
-14. **Narrative Continuity:** Checks if the response maintains a consistent narrative.
+1. **Response Tone:** Assesses the tone and style of the generated response.
+
+2. **Answer Relevance:** Measures the degree to which the generated content directly addresses and pertains to the specific question or prompt provided by the user.
+
+3. **Factual Consistency:** Measures the extent of the model hallucinating i.e. model is making up a response based on its imagination or response is grounded in the context supplied.
+
+4. **Conceptual Similarity:** Measures the extent to which the model response aligns with and reflects the underlying ideas or concepts present in the provided context or prompt.
+
+5. **Readability:** Assesses whether the model response can be read and understood by the intended audience, taking into account factors such as vocabulary complexity, sentence structure, and overall clarity.
+
+6. **Coherence:** Evaluates how well the model generates coherent and logical responses that align with the context of the question.
+
+7. **Clarity:** Assesses the response's clarity in terms of language and structure, based on grammar, readability, concise sentences and words, and less redundancy or diversity.
+
+8. **Diversity:** Assesses the diversity of vocabulary used in a piece of text.
+
+9. **Creativity:** Assesses the ability of the model to generate imaginative, and novel responses that extend beyond standard or expected answers.
+
+10. **Data Leakage:** Detects whether the model response contains any personal information such as credit card numbers, phone numbers, emails, URLs, etc.
+
+11. **Do Not Use Keywords:** Identifies and evaluates the use of specific keywords or phrases.
+
+12. **Model Refusal:** Identifies rejections in the model responses.
+
+13. **Narrative Continuity:** Measures the consistency and logical flow of the response throughout the generated text, ensuring that the progression of events remains coherent and connected.
+
+14. **Word Count Limit:** Checks if the generated text adheres to specified word limits.
+
+15. **Insecure Output:** Detects any potentially harmful responses that could lead to system vulnerabilities. Eg. detects any mallicious code, Javascript or Markdown generated by the model that could result in XSS.
+
+16. **Answer Fluency:** Assesses the smoothness and coherence with which the model generates language that is easily understandable and grammatically correct.
+
+17. **Grammatical Correctness:** Checks whether the model response adherence to the rules of syntax, is free from errors and follows the conventions of the target language.
 
 ## Advanced Usage
+
 ### Custom Configurations
 
 You can provide custom configurations for metrics:
 
-```
+```python
 metrics_config = {
     "response_tone_config": {
         "threshold": 0.5,
@@ -122,19 +155,16 @@ results = inspeq_eval.evaluate_llm_task(
 
 ## Error Handling
 
-### The SDK uses custom exceptions for different types of errors:
+The SDK uses custom exceptions for different types of errors:
 
-
- **APIErrory:** For API related issues
- **ConfigError:** For invalid  config related issues
- **InputError:** For invalid input data
-
+- **APIError:** For API related issues
+- **ConfigError:** For invalid config related issues
+- **InputError:** For invalid input data
 
 ## Additional Resources
 
 For detailed API documentation, visit [Inspeq Documentation](https://docs.inspeq.ai).
 For support or questions, contact our support team through the Inspeq App.
-
 
 ## License
 
