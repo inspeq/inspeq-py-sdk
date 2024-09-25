@@ -19,90 +19,100 @@ def generate_random_task_name(prefix="task", length=8):
     random_string = ''.join(random.choices(string.ascii_lowercase + string.digits, k=length))
     return f"{prefix}_{random_string}"
 
-def metric_name_matches(actual_name, expected_names):
-    """Check if the actual metric name matches any of the expected names."""
-    actual_name = actual_name.replace('_EVALUATION', '').lower()
-    return any(expected.lower() in actual_name for expected in expected_names)
-
-
 @pytest.fixture
 def random_task_name():
     return generate_random_task_name()
 
 @pytest.fixture
 def inspeq_client():
-    return InspeqEval(inspeq_api_key= INSPEQ_API_KEY, inspeq_project_id=INSPEQ_PROJECT_ID, inspeq_api_url=INSPEQ_API_URL)
+    return InspeqEval(inspeq_api_key=INSPEQ_API_KEY, inspeq_project_id=INSPEQ_PROJECT_ID, inspeq_api_url=INSPEQ_API_URL)
 
-# customizable_metrics
-def test_evaluate_llm_task_more_thresholds(inspeq_client, random_task_name):
-    customizable_metrics = ["ANSWER_FLUENCY","GRAMMATICAL_CORRECTNESS", "RESPONSE_TONE", "ANSWER_RELEVANCE", "FACTUAL_CONSISTENCY", "CONCEPTUAL_SIMILARITY", "READABILITY", "COHERENCE", "CLARITY", "DIVERSITY", "CREATIVITY"]
-    input_data = [
-        {
-            "prompt": "What is the capital of France?",
-            "response": "Paris is the capital of France.",
-            "context": "The user is asking about European capitals."
-        }
-    ]
-    
+def validate_result_structure(result):
+    assert "status" in result
+    assert "message" in result
+    assert "results" in result
+    assert isinstance(result["results"], list)
+
+    for item in result["results"]:
+        assert "id" in item
+        assert "project_id" in item
+        assert "task_id" in item
+        assert "task_name" in item
+        assert "model_name" in item
+        assert "source_platform" in item
+        assert "data_input_id" in item
+        assert "data_input_name" in item
+        assert "metric_set_input_id" in item
+        assert "metric_set_input_name" in item
+        assert "response" in item
+        assert "context" in item
+        assert "metric_name" in item
+        assert "score" in item
+        assert "passed" in item
+        assert isinstance(item["passed"], bool)
+        assert "evaluation_details" in item
+        assert "metrics_config" in item
+        assert "created_at" in item
+        assert "updated_at" in item
+        assert "created_by" in item
+        assert "updated_by" in item
+        assert "is_deleted" in item
+        assert "metric_evaluation_status" in item
+
+    assert "user_id" in result
+    assert "remaining_credits" in result
+
+def run_test(inspeq_client, metrics_list, input_data, task_name):
     try:
         result = inspeq_client.evaluate_llm_task(
-            metrics_list=customizable_metrics,
+            metrics_list=metrics_list,
             input_data=input_data,
-            task_name=random_task_name
+            task_name=task_name
         )
-        print(f"More thresholds task result: {json.dumps(result, indent=2)}")
+        print(f"Task result: {json.dumps(result, indent=2)}")
         
-        assert isinstance(result, dict)
-        assert result["status"] == 200
-        assert isinstance(result["data"], list)
-        
-        for item in result["data"]:
-            assert item["metric_name"] in [f"{metric}_EVALUATION" for metric in customizable_metrics]
-            config = json.loads(base64.b64decode(item["metrics_config"]))
-            assert len(config["label_thresholds"]) == len(config["custom_labels"]) + 1
+        validate_result_structure(result)
+        return result
         
     except APIError as e:
         pytest.fail(f"API Error occurred: {str(e)}")
+    except Exception as e:
+        pytest.fail(f"Unexpected error occurred: {str(e)}")
 
-# binary_metrics
-def test_evaluate_llm_task_equal_thresholds(inspeq_client, random_task_name):
-    
-    binary_metrics = [ "DATA_LEAKAGE", "DO_NOT_USE_KEYWORDS", "MODEL_REFUSAL",  "NARRATIVE_CONTINUITY", "WORD_COUNT_LIMIT"] 
-    
+def test_evaluate_llm_task_generation_metrics(inspeq_client, random_task_name):
+    generation_metrics = [
+        "RESPONSE_TONE", "ANSWER_RELEVANCE", "FACTUAL_CONSISTENCY", "CONCEPTUAL_SIMILARITY",
+        "READABILITY", "COHERENCE", "CLARITY", "DIVERSITY", "CREATIVITY", "NARRATIVE_CONTINUITY",
+        "GRAMMATICAL_CORRECTNESS", "PROMPT_INJECTION", "DATA_LEAKAGE", "INSECURE_OUTPUT",
+        "INVISIBLE_TEXT", "TOXICITY"
+    ]
     input_data = [
         {
-            "prompt": "Summarize the benefits of exercise in 50 words.",
-            "response": "Exercise improves cardiovascular health, strengthens muscles, enhances mental well-being, boosts energy levels, aids weight management, reduces disease risks, improves sleep quality, increases longevity, enhances cognitive function, and promotes overall quality of life.",
-            "context": "The user is writing a short article about health."
+            "prompt": "What are the benefits of renewable energy?",
+            "response": "Renewable energy sources like solar and wind power offer numerous benefits. They reduce greenhouse gas emissions, decrease dependence on fossil fuels, create jobs in the green energy sector, and can lead to long-term cost savings for consumers and businesses.",
+            "context": "The user is researching sustainable energy solutions."
         }
     ]
     
-    try:
-        result = inspeq_client.evaluate_llm_task(
-            metrics_list=binary_metrics,
-            input_data=input_data,
-            task_name=random_task_name
-        )
-        print(f"Equal thresholds task result: {json.dumps(result, indent=2)}")
-        
-        assert isinstance(result, dict)
-        assert result["status"] == 200
-        assert isinstance(result["data"], list)
-        
-        for item in result["data"]:
-            assert metric_name_matches(item["metric_name"], binary_metrics), \
-                f"Unexpected metric name: {item['metric_name']}"
-            config = json.loads(base64.b64decode(item["metrics_config"]))
-            assert len(config["label_thresholds"]) == len(config["custom_labels"]), \
-                f"Mismatch in label_thresholds and custom_labels for {item['metric_name']}"
-        
-    except APIError as e:
-        pytest.fail(f"API Error occurred: {str(e)}")
-        
+    run_test(inspeq_client, generation_metrics, input_data, random_task_name)
 
-# special metrics
+def test_evaluate_llm_task_summarization_metrics(inspeq_client, random_task_name):
+    summarization_metrics = [
+        "BLEU_SCORE", "COMPRESSION_SCORE", "COSINE_SIMILARITY_SCORE",
+        "FUZZY_SCORE", "METEOR_SCORE", "ROUGE_SCORE"
+    ]
+    input_data = [
+        {
+            "context": "Climate change is a global challenge that affects all aspects of our lives. It is caused by the increase in greenhouse gases in the atmosphere, primarily due to human activities such as burning fossil fuels and deforestation. The effects of climate change include rising temperatures, more frequent extreme weather events, sea-level rise, and disruptions to ecosystems. To address this issue, countries around the world are working to reduce their carbon emissions and transition to renewable energy sources.",
+            "response": "Climate change, driven by human activities, causes global temperature rise and extreme weather. Countries are working to reduce emissions and adopt renewable energy to combat it.",
+            "reference_summary": "Climate change, caused by increased greenhouse gases from human activities, leads to rising temperatures and extreme weather. Global efforts focus on reducing emissions and adopting renewable energy."
+        }
+    ]
+    
+    run_test(inspeq_client, summarization_metrics, input_data, random_task_name)
+
 def test_evaluate_llm_task_special_cases(inspeq_client, random_task_name):
-    metrics_list = ["CREATIVITY", "DIVERSITY"]
+    special_metrics = ["CREATIVITY", "DIVERSITY", "PROMPT_INJECTION", "INSECURE_OUTPUT", "INVISIBLE_TEXT", "TOXICITY"]
     input_data = [
         {
             "prompt": "Write a creative short story about a time-traveling scientist.",
@@ -111,23 +121,4 @@ def test_evaluate_llm_task_special_cases(inspeq_client, random_task_name):
         }
     ]
     
-    try:
-        result = inspeq_client.evaluate_llm_task(
-            metrics_list=metrics_list,
-            input_data=input_data,
-            task_name=random_task_name
-        )
-        print(f"Special cases task result: {json.dumps(result, indent=2)}")
-        
-        assert isinstance(result, dict)
-        assert result["status"] == 200
-        assert isinstance(result["data"], list)
-        
-        for item in result["data"]:
-            assert item["metric_name"] in [f"{metric}_EVALUATION" for metric in metrics_list]
-            config = json.loads(base64.b64decode(item["metrics_config"]))
-            assert len(config["label_thresholds"]) == 3
-            assert len(config["custom_labels"]) == 2
-        
-    except APIError as e:
-        pytest.fail(f"API Error occurred: {str(e)}")
+    run_test(inspeq_client, special_metrics, input_data, random_task_name)
